@@ -30,7 +30,7 @@ function App() {
                         <div className="badge flag">9</div>
                     </div>
                     <div className="avatar">
-                        <img src="./public/avatar.jpg" />
+                        <img src="https://i1.sndcdn.com/avatars-000293458829-rcow90-t500x500.jpg" />
                         <span>Alexander Pierce</span>
                     </div>
                     <i class="fa-solid fa-gears"></i>
@@ -41,7 +41,7 @@ function App() {
                 <div className="sidebar">
                     <div className="group">
                         <div className="group_user">
-                            <img src="../public/avatar.jpg" />
+                            <img src="https://i1.sndcdn.com/avatars-000293458829-rcow90-t500x500.jpg"/>
                             <div>
                                 <span>Alexander Pierce</span>
                                 <span className="status">Online</span>

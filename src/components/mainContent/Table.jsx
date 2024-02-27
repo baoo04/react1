@@ -78,7 +78,6 @@ export default function Table() {
 
     function handleClickPagination(index) {
         setCurrentPage(index);
-        console.log("da clickkkkkkkkkkkkkk");
     }
     function handleClickNext() {
         setCurrentPage(currentPage + 1);
@@ -88,143 +87,169 @@ export default function Table() {
     }
 
     return (
-        <div className="table__component">
-            <div className="table__header">
-                <div className="table__header--left">
-                    <h3>Data tables</h3>
-                    <span>advanced table</span>
-                </div>
-                <div className="table__header--right">
-                    <div>
-                        <i className="fa-solid fa-gauge"></i>
-                        <span>Home</span>
+        <div>
+            <div className="table__component">
+                <div className="table__header">
+                    <div className="table__header--left">
+                        <h3>Data tables</h3>
+                        <span>advanced table</span>
                     </div>
-                    <i className="fa-solid fa-chevron-right"></i>
-                    <a>Tables</a>
-                    <i className="fa-solid fa-chevron-right"></i>
-                    <a style={{ color: "#777777" }}>Data tables</a>
+                    <div className="table__header--right">
+                        <div>
+                            <i className="fa-solid fa-gauge"></i>
+                            <span>Home</span>
+                        </div>
+                        <i className="fa-solid fa-chevron-right"></i>
+                        <a>Tables</a>
+                        <i className="fa-solid fa-chevron-right"></i>
+                        <a style={{ color: "#777777" }}>Data tables</a>
+                    </div>
                 </div>
-            </div>
 
-            <div className="Table">
-                <h3 className="table__title">Hover Data Tables</h3>
+                <div className="Table">
+                    <h3 className="table__title">Hover Data Tables</h3>
 
-                <div className="table__content">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">
-                                    Rendering Engine
-                                    <i
-                                        className="fa-solid fa-arrow-down-short-wide"
-                                        style={{ opacity: "0.7" }}
-                                    ></i>
-                                </th>
-                                <th scope="col">
-                                    Browser
-                                    <i
-                                        className="fa-solid fa-sort"
-                                        style={{ opacity: "0.2" }}
-                                    ></i>
-                                </th>
-                                <th scope="col">
-                                    Platform
-                                    <i
-                                        className="fa-solid fa-sort"
-                                        style={{ opacity: "0.2" }}
-                                    ></i>
-                                </th>
-                                <th scope="col">
-                                    Engine version
-                                    <i
-                                        className="fa-solid fa-sort"
-                                        style={{ opacity: "0.2" }}
-                                    ></i>
-                                </th>
-                                <th scope="col">
-                                    CSS grade
-                                    <i
-                                        className="fa-solid fa-sort"
-                                        style={{ opacity: "0.2" }}
-                                    ></i>
-                                </th>
-                            </tr>
-                        </thead>
+                    <div className="table__content">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">
+                                        Rendering Engine
+                                        <i
+                                            className="fa-solid fa-arrow-down-short-wide"
+                                            style={{
+                                                opacity: "0.7",
+                                                cursor: "pointer",
+                                            }}
+                                        ></i>
+                                    </th>
+                                    <th scope="col">
+                                        Browser
+                                        <i
+                                            className="fa-solid fa-sort"
+                                            style={{
+                                                opacity: "0.2",
+                                                cursor: "pointer",
+                                            }}
+                                        ></i>
+                                    </th>
+                                    <th scope="col">
+                                        Platform
+                                        <i
+                                            className="fa-solid fa-sort"
+                                            style={{
+                                                opacity: "0.2",
+                                                cursor: "pointer",
+                                            }}
+                                        ></i>
+                                    </th>
+                                    <th scope="col">
+                                        Engine version
+                                        <i
+                                            className="fa-solid fa-sort"
+                                            style={{
+                                                opacity: "0.2",
+                                                cursor: "pointer",
+                                            }}
+                                        ></i>
+                                    </th>
+                                    <th scope="col">
+                                        CSS grade
+                                        <i
+                                            className="fa-solid fa-sort"
+                                            style={{
+                                                opacity: "0.2",
+                                                cursor: "pointer",
+                                            }}
+                                        ></i>
+                                    </th>
+                                </tr>
+                            </thead>
 
-                        <tbody>
-                            {currentTable.map(function (row, index) {
-                                return (
-                                    <tr key={index}>
-                                        {row.map(function (element, cnt) {
-                                            return <td key={cnt}>{element}</td>;
-                                        })}
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
+                            <tbody>
+                                {currentTable.map(function (row, index) {
+                                    return (
+                                        <tr key={index}>
+                                            {row.map(function (element, cnt) {
+                                                return (
+                                                    <td key={cnt}>{element}</td>
+                                                );
+                                            })}
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
 
-                        <tfoot>
-                            <tr>
-                                <th scope="col">Rendering Engine</th>
-                                <th scope="col">Browser</th>
-                                <th scope="col">Platform</th>
-                                <th scope="col">Engine version</th>
-                                <th scope="col">CSS grade</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-                <div className="table__action">
-                    <div className="table__action--left">
-                        {`Showing ${currentPage * itemPerPage.current + 1} to
+                            <tfoot>
+                                <tr>
+                                    <th scope="col">Rendering Engine</th>
+                                    <th scope="col">Browser</th>
+                                    <th scope="col">Platform</th>
+                                    <th scope="col">Engine version</th>
+                                    <th scope="col">CSS grade</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div className="table__action">
+                        <div className="table__action--left">
+                            {`Showing ${
+                                currentPage * itemPerPage.current + 1
+                            } to
                 ${Math.min(
                     currentPage * itemPerPage.current + itemPerPage.current,
                     data.length
                 )} of ${data.length + 1} entries`}
-                    </div>
+                        </div>
 
-                    <div className="table__action--right">
-                        <div className="table__pagination">
-                            <ul className="list__action">
-                                <li
-                                    className="previous"
-                                    style={{
-                                        pointerEvents:
-                                            currentPage === 0 ? "none" : "auto",
-                                    }}
-                                    onClick={handleClickPrevious}
-                                >
-                                    Previous
-                                </li>
-                                {tableIndex.map((item, index) => {
-                                    return (
-                                        <li
-                                            className={
-                                                currentPage === index
-                                                    ? "pagination__item active"
-                                                    : "pagination__item"
-                                            }
-                                            style={{ cursor: "pointer" }}
-                                            onClick={() =>
-                                                handleClickPagination(index)
-                                            }
-                                        >
-                                            {item}
-                                        </li>
-                                    );
-                                })}
+                        <div className="table__action--right">
+                            <div className="table__pagination">
+                                <ul className="list__action">
+                                    <li
+                                        className="previous"
+                                        style={{
+                                            pointerEvents:
+                                                currentPage === 0
+                                                    ? "none"
+                                                    : "auto",
+                                            cursor: "pointer",
+                                        }}
+                                        onClick={handleClickPrevious}
+                                    >
+                                        Previous
+                                    </li>
+                                    {tableIndex.map((item, index) => {
+                                        return (
+                                            <li
+                                                className={
+                                                    currentPage === index
+                                                        ? "pagination__item active"
+                                                        : "pagination__item"
+                                                }
+                                                style={{ cursor: "pointer" }}
+                                                onClick={() =>
+                                                    handleClickPagination(index)
+                                                }
+                                            >
+                                                {item}
+                                            </li>
+                                        );
+                                    })}
 
-                                <li
-                                    className="next"
-                                    style={{
-                                        pointerEvents:
-                                            currentPage === 5 ? "none" : "auto",
-                                    }}
-                                    onClick={handleClickNext}
-                                >
-                                    Next
-                                </li>
-                            </ul>
+                                    <li
+                                        className="next"
+                                        style={{
+                                            pointerEvents:
+                                                currentPage === 5
+                                                    ? "none"
+                                                    : "auto",
+                                        }}
+                                        onClick={handleClickNext}
+                                    >
+                                        Next
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -61,7 +61,7 @@
                     justify-content: center;
                     border: 1px solid #ccc;
                     border-radius: 4px;
-                    padding: 0 10px;
+                    padding-left: 0;
                 }
             }
         }
@@ -131,9 +131,6 @@
     margin-left: 5px;
 }
 
-.table__action--right {
-    font-size: 14px;
-}
 
 .pagination__item {
     padding: 7px 12px;
@@ -147,26 +144,32 @@
     color: #fff;
 }
 
+.pagination__item.active:hover {
+    background-color: #337ab7;
+}
+
 .previous {
     padding-right: 10px;
     color: #777777;
     font-size: 13px;
+    border-right: 1px solid #D2D6DE;
+    padding: 7px 12px;
 }
 
 .next {
     padding-left: 10px;
     color: #777777;
     font-size: 13px;
+    cursor: pointer;
+    padding: 7px 12px;
 }
 
-.previous:hover,
-.next:hover,
 .pagination__item:hover {
     background-color: #ddd;
 }
 
 .table tbody tr:hover {
-    background-color: #e6f7ff;
+    background-color: #D2D6DE;
     transition: background-color 0.3s;
 }
 
@@ -187,6 +190,9 @@ thead tr {
     font-size: 15px;
 }
 
+.next:hover, .previous:hover {
+    background-color: #D2D6DE;
+}
 
 .table td,
 .table th {

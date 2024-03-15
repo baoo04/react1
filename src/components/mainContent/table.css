@@ -1,9 +1,11 @@
-@charset "UTF-8";
 .table__component {
   padding-left: 15px;
   padding-right: 25px;
   background-color: #ecf0f5;
   z-index: -1;
+  width: 81.5vw;
+  height: 1000px;
+  position: relative;
   margin-top: -10px;
 }
 .table__component .table__header {
@@ -24,17 +26,17 @@
 .table__component .table__header .table__header--left span {
   margin-top: 5px;
   color: #777;
-  font-size: 15px;
+  font-size: 13.5px;
 }
 .table__component .table__header .table__header--right {
   display: flex;
-  gap: 10px;
+  gap: 6px;
   align-items: center;
-  font-size: 13px;
+  font-size: 11px;
 }
 .table__component .table__header .table__header--right > i {
   font-size: 8px;
-  padding-top: 3px;
+  padding-top: 2px;
   color: #777;
 }
 .table__component .table__header .table__header--right > div {
@@ -66,7 +68,7 @@
   justify-content: center;
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 0 10px;
+  padding-left: 0;
 }
 
 .Table {
@@ -127,11 +129,9 @@
 }
 
 .table__action--left {
-  font-size: 14px;
-}
-
-.table__action--right {
-  font-size: 14px;
+  font-size: 13px;
+  color: #777777;
+  margin-left: 5px;
 }
 
 .pagination__item {
@@ -146,26 +146,32 @@
   color: #fff;
 }
 
+.pagination__item.active:hover {
+  background-color: #337ab7;
+}
+
 .previous {
   padding-right: 10px;
   color: #777777;
   font-size: 13px;
+  border-right: 1px solid #D2D6DE;
+  padding: 7px 12px;
 }
 
 .next {
   padding-left: 10px;
   color: #777777;
   font-size: 13px;
+  cursor: pointer;
+  padding: 7px 12px;
 }
 
-.previous:hover,
-.next:hover,
 .pagination__item:hover {
   background-color: #ddd;
 }
 
 .table tbody tr:hover {
-  background-color: #e6f7ff;
+  background-color: #D2D6DE;
   transition: background-color 0.3s;
 }
 
@@ -186,12 +192,20 @@ thead tr {
   font-size: 15px;
 }
 
-.table {
-  max-height: 300px; /* Đặt chiều cao tối đa mong muốn cho bảng */
-  overflow-y: auto; /* Bật thanh cuộn dọc khi nội dung vượt quá chiều cao tối đa */
+.next:hover, .previous:hover {
+  background-color: #D2D6DE;
 }
 
 .table td,
 .table th {
-  height: 10px; /* Đặt chiều cao mong muốn cho các ô */
+  height: 10px;
+}
+
+@media screen and (max-width: 1000px) {
+  th, td {
+    padding: 4px;
+  }
+  .table__component {
+    width: 100%;
+  }
 }/*# sourceMappingURL=table.css.map */

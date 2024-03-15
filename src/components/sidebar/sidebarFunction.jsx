@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./sidebarFunction.scss";
-import MenuItem from "./MenuItem";
 
 const components = [
     {
@@ -106,32 +105,34 @@ function SidebarMenu() {
                 <li
                     key={index}
                     onClick={() => toggleExpand(index)}
-                    className={
-                        childExpanded[index] ? "" : "flex"
-                    }
+                    className={childExpanded[index] ? "" : ""}
                 >
-                    <div className="groupp">
-                        <i className={`fas ${component.logo}`}></i>
-                        {component.name}
+                    <div className="list" style={{display: "flex", justifyContent:"space-between", paddingBottom: 5}}>
+                        <div className="groupp">
+                            <i className={`fas ${component.logo}`}></i>
+                            {component.name}
+                        </div>
+                        <span
+                            className={
+                                childExpanded[index] ? "" : "arrow-right"
+                            }
+                        >
+                            {childExpanded[index] || expandedItem === index
+                                ? "<"
+                                : ">"}
+                        </span>
                     </div>
-                    <span
-                        className={
-                            childExpanded[index] ? "" : "arrow-right"
-                        }
-                    >
-                        {childExpanded[index] || expandedItem === index
-                            ? ""
-                            : "<"}
-                    </span>
                     {component.child.length > 0 && expandedItem === index && (
-                        <ul className={`sideBarChild ${childExpanded[index] ? "" : "none"}`}>
+                        <ul
+                            className={`sideBarChild ${
+                                childExpanded[index] ? "" : "none"
+                            }`}
+                        >
                             {component.child.map((child, childIndex) => (
                                 <li
                                     key={childIndex}
-                                    onClick={() =>
-                                        toggleChildExpand(index, childIndex)
-                                    }
                                 >
+                                    <i className="fa fa-circle-o"></i>
                                     {child}
                                 </li>
                             ))}

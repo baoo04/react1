@@ -3,6 +3,9 @@
     padding-right: 25px;
     background-color: #ecf0f5;
     z-index: -1;
+    width: 81.5vw;
+    height: 1000px;
+    position: relative;
     margin-top: -10px;
     .table__header {
         display: flex;
@@ -197,4 +200,13 @@ thead tr {
 .table td,
 .table th {
     height: 10px; 
+}
+
+@media screen and (max-width: 1000px) {
+    th, td {
+        padding: 4px; 
+    }
+    .table__component {
+        width: 100%;
+    }
 }

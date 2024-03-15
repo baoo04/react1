@@ -1,0 +1,138 @@
+.title-responsive {
+    display: none;
+}
+
+.App-header {
+    right: 0;
+    height: 50px;
+    background-color: #3c8dbc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    h1 {
+        font-size: 20px;
+        display: inline-block;
+        line-height: 50px;
+        text-align: center;
+        color: aliceblue;
+        background: #357ca5;
+        display: inline-block;
+        height: 50px;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 14.65vw;
+        span {
+            font-weight: 400;
+        }
+    }
+    & > i {
+        color: white;
+        font-size: 15px;
+        font-weight: bold;
+        margin-left: 10px;
+        margin-top: 5px;
+    }
+    .App-header__group {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        i {
+            color: white;
+            font-size: 15px;
+            padding-right: 15px;
+        }
+        .notification,
+        .Flag,
+        .letter {
+            position: relative;
+            .badge.noti {
+                position: absolute;
+                top: -8px;
+                right: 5px;
+                background-color: #f39c12;
+                color: white;
+                border-radius: 5px;
+                padding: 2px 4px;
+                font-size: 8px;
+                text-align: center;
+                font-weight: bold;
+            }
+            .badge.flag {
+                position: absolute;
+                top: -8px;
+                right: 5px;
+                background-color: red;
+                color: white;
+                border-radius: 5px;
+                padding: 2px 4px;
+                font-size: 8px;
+                text-align: center;
+                font-weight: bold;
+            }
+            .badge.let {
+                position: absolute;
+                top: -8px;
+                right: 5px;
+                background-color: #5cb85c;
+                color: white;
+                border-radius: 5px;
+                padding: 2px 4px;
+                font-size: 8px;
+                text-align: center;
+                font-weight: bold;
+            }
+        }
+        .avatar {
+            padding-left: 15px;
+            padding-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -10px;
+            gap: 10px;
+            img {
+                width: 35px;
+                height: 35px;
+                border-radius: 50%;
+                margin-top: 10px;
+            }
+            span {
+                color: white;
+                display: inline-block;
+                font-size: 14px;
+                margin-top: 10px;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .App-header {
+        width: 100%;
+        min-width: 100%;
+        width: 100vw;
+        &>i {
+            margin-left: 20px;
+        }
+    }
+    .title-responsive {
+        width: 100%;
+        display: block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        background: #367FA9;
+        color: #FFFFFF;
+        font-size: 20px;
+        span {
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+    }
+}

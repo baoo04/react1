@@ -306,3 +306,10 @@
         display: none;
     }
 }
+
+@media screen and (min-width: 800px) {
+    .sidebar {
+        margin-left: 0px;
+        transition: margin-left 0.5s;
+    }
+}

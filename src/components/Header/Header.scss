@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 99%;
+    width: 100%;
     h1 {
         font-size: 20px;
         display: inline-block;
@@ -113,15 +113,14 @@
 
 @media screen and (max-width: 800px) {
     .App-header {
-        width: 100%;
+        width: 103%;
         min-width: 100%;
-        width: 100vw;
         &>i {
             margin-left: 20px;
         }
     }
     .title-responsive {
-        width: 100%;
+        width: 103%;
         display: block;
         display: flex;
         justify-content: center;

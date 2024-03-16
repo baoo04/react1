@@ -20,9 +20,9 @@ export default function SideBar() {
                     <input
                         type="text"
                         className="finding"
-                        placeHolder="Search..."
+                        placeholder="Search..."
                     />
-                    <i class="fa fa-search search-icon"></i>
+                    <i className="fa fa-search search-icon"></i>
                 </div>
                 <div className="navigation">
                     <h4 className="navigation__title">MAIN NAVIGATION</h4>

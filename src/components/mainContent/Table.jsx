@@ -1,6 +1,10 @@
 import React from "react";
 import { useState, useRef, useEffect } from "react";
-import "./table.scss";
+import "./table.css";
+
+function log() {
+    console.log("da annnnnnnnnnnnnn");
+}
 
 const data = [
     ["Gecko", "Firefox 1.0", "Win 98+ / OSX.2+a", "1.7", "A"],
@@ -78,6 +82,7 @@ export default function Table() {
 
     function handleClickPagination(index) {
         setCurrentPage(index);
+        console.log(index);
     }
     function handleClickNext() {
         setCurrentPage(currentPage + 1);
@@ -102,12 +107,12 @@ export default function Table() {
                         <i className="fa-solid fa-chevron-right"></i>
                         <a>Tables</a>
                         <i className="fa-solid fa-chevron-right"></i>
-                        <a style={{ color: "#777777" }}>Data tables</a>
+                        <a style={{ color: "#777777" }}>Data Tables</a>
                     </div>
                 </div>
 
                 <div className="Table">
-                    <h3 className="table__title">Hover Data Tables</h3>
+                    <h3 className="table__title" onClick={() => {console.log("XXXXXXXXXXXXXXXXXXXXXXXXX")}}>Hover Data Tables</h3>
 
                     <div className="table__content">
                         <table className="table">
@@ -214,7 +219,9 @@ export default function Table() {
                                                     : "auto",
                                             cursor: "pointer",
                                         }}
-                                        onClick={handleClickPrevious}
+                                        onClick={() => {
+                                            handleClickPrevious(); 
+                                        }}
                                     >
                                         Previous
                                     </li>
@@ -227,9 +234,10 @@ export default function Table() {
                                                         : "pagination__item"
                                                 }
                                                 style={{ cursor: "pointer" }}
-                                                onClick={() =>
-                                                    handleClickPagination(index)
-                                                }
+                                                onClick={() => {
+                                                    handleClickPagination(index);
+                                                    log();
+                                                }}
                                             >
                                                 {item}
                                             </li>

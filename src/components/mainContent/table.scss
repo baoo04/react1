@@ -3,7 +3,7 @@
     padding-right: 25px;
     background-color: #ecf0f5;
     z-index: -1;
-    width: 96%;
+    width: calc(100vw - 300px);
     height: 1000px;
     position: relative;
     margin-top: -10px;
@@ -12,7 +12,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 81.65vw;
         .table__header--left {
             display: flex;
             align-items: center;
@@ -166,6 +165,7 @@
     font-size: 13px;
     cursor: pointer;
     padding: 7px 12px;
+    cursor: pointer;
 }
 
 .pagination__item:hover {
@@ -205,11 +205,12 @@ thead tr {
 
 @media screen and (max-width: 800px) {
     th, td {
-        padding: 4px; 
+        padding: 0px; 
     }
     .table__component {
         width: 100%;
         padding-left: 20px;
+        padding-right: 0px;
     }
     .table__header {
         display: block !important;
@@ -220,7 +221,6 @@ thead tr {
             padding-top: 10px;
             padding-bottom: 10px;
             background: #D2D6DE;
-            width: 117%;
             div{
                 i:first-child {
                     padding-left: 10px;

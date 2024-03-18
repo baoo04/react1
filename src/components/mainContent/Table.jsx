@@ -89,6 +89,7 @@ export default function Table() {
             .get(api)
             .then((res) => {
                 setUsers(res.data);
+                console.log("goi thanh conggggggg")
             })
             .catch((error) => {
                 console.log("Error fetching users: ", error);

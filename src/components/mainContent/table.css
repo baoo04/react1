@@ -2,11 +2,9 @@
   padding-left: 15px;
   padding-right: 25px;
   background-color: #ecf0f5;
-  z-index: -1;
   width: calc(100vw - 300px);
   height: 1000px;
   position: relative;
-  margin-top: -10px;
   max-width: 100%;
 }
 .table__component .table__header {
@@ -69,7 +67,6 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   padding-left: 0;
-  cursor: pointer;
 }
 
 .Table {
@@ -82,6 +79,28 @@
   padding-bottom: 10px;
   font-size: 13px;
 }
+.Table .create-button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 12px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition-duration: 0.4s;
+}
+.Table .create-button:hover {
+  background-color: #45a049;
+}
+.Table .title__group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .table {
   width: 100%;
@@ -89,27 +108,28 @@
   overflow: hidden;
   border: 1px solid #f4f4f4;
 }
-
+.table thead tr th {
+  padding: 12px 10px;
+}
+.table tfoot tr th {
+  padding: 12px 10px;
+}
 .table th,
 .table td {
-  padding: 12px 15px;
+  padding: 5px 15px;
   text-align: left;
   border-bottom: 1px solid #f4f4f4;
   border-right: 1px solid #f4f4f4;
 }
-
 .table th {
   font-weight: bold;
 }
-
 .table tbody tr:hover {
   background-color: #f5f5f5;
 }
-
 .table tfoot th {
   font-weight: bold;
 }
-
 .table__title {
   margin-bottom: 25px;
   font-size: 17px;
@@ -128,7 +148,6 @@
   margin-top: 20px;
   align-items: center;
 }
-
 .table__action--left {
   font-size: 13px;
   color: #777777;
@@ -141,21 +160,22 @@
   color: #777777;
   cursor: pointer;
 }
-
 .pagination__item.active {
   background-color: #337ab7;
   color: #fff;
 }
-
 .pagination__item.active:hover {
   background-color: #337ab7;
+}
+.pagination__item:hover {
+  background-color: #ddd;
 }
 
 .previous {
   padding-right: 10px;
   color: #777777;
   font-size: 13px;
-  border-right: 1px solid #D2D6DE;
+  border-right: 1px solid #d2d6de;
   padding: 7px 12px;
 }
 
@@ -165,14 +185,11 @@
   font-size: 13px;
   cursor: pointer;
   padding: 7px 12px;
+  cursor: pointer;
 }
 
-.pagination__item:hover {
-  background-color: #ddd;
-}
-
-.table tbody tr:hover {
-  background-color: #D2D6DE;
+tbody tr:hover {
+  background-color: #d2d6de;
   transition: background-color 0.3s;
 }
 
@@ -183,7 +200,6 @@ thead tr {
 .table th {
   position: relative;
 }
-
 .table th i {
   position: absolute;
   top: 50%;
@@ -193,17 +209,14 @@ thead tr {
   font-size: 15px;
 }
 
-.next:hover, .previous:hover {
-  background-color: #D2D6DE;
-}
-
-.table td,
-.table th {
-  height: 10px;
+.next:hover,
+.previous:hover {
+  background-color: #d2d6de;
 }
 
 @media screen and (max-width: 800px) {
-  th, td {
+  th,
+  td {
     padding: 0px;
   }
   .table__component {
@@ -211,18 +224,73 @@ thead tr {
     padding-left: 20px;
     padding-right: 0px;
   }
-  .table__header {
+  .table__component .table__header {
     display: block !important;
     width: 100%;
   }
-  .table__header .table__header--right {
+  .table__component .table__header--right {
     margin-top: -15px;
     margin-bottom: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
-    background: #D2D6DE;
+    background: #d2d6de;
   }
-  .table__header .table__header--right div i:first-child {
+  .table__component .table__header--right div i:first-child {
     padding-left: 10px;
   }
+}
+tbody .button-group {
+  justify-content: center;
+  padding: none;
+  text-align: center;
+}
+tbody .button-group .edit-btn {
+  color: #337ab7;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  border: 1px solid transparent;
+  margin-right: 10px;
+}
+tbody .button-group .edit-btn:hover {
+  color: #fff;
+  background-color: #337ab7;
+  transform: scale(1.1);
+}
+tbody .button-group .edit-btn svg {
+  font-size: 18px;
+}
+tbody .button-group .delete-btn {
+  color: brown;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  border: 1px solid transparent;
+}
+tbody .button-group .delete-btn:hover {
+  color: #fff;
+  background-color: #d9534f;
+  transform: scale(1.1);
+}
+tbody .button-group .delete-btn svg {
+  font-size: 18px;
+}
+tbody tr td {
+  padding: 10px;
 }/*# sourceMappingURL=table.css.map */

@@ -1,88 +1,139 @@
 import React from "react";
 import { useState, useRef, useEffect } from "react";
 import "./table.css";
-
-function log() {
-    console.log("da annnnnnnnnnnnnn");
-}
-
-const data = [
-    ["Gecko", "Firefox 1.0", "Win 98+ / OSX.2+a", "1.7", "A"],
-    ["Gecko", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Gecko", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Gecko", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Gecko", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Gecko", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Gecko", "Firefox 1.0", "Win 97+ plus / OSX.2+", "1.7", "A"],
-    ["Gecko", "Firefox 2.0", "Win 97+ plus / OSX.2+", "1.7", "D"],
-    ["Gecko", "Firefox 2.0", "Win 97+ plus / OSX.2+", "1.7", "D"],
-    ["Gecko", "Firefox 2.0", "Win 97+ plus / OSX.2+", "1.7", "D"],
-    ["Gecko", "Firefox 2.0", "Win 97+ plus / OSX.2+D", "1.7", "D"],
-    ["Gecko", "Firefox 2.0", "Win 97+ plus / OSX.2+", "1.7", "D"],
-    ["Gecko", "Firefox 2.0", "Win 97+ plus / OSX.2+", "1.7", "D"],
-    ["Bao", "Firefox 2.0", "Win 97+ plus / OSX.2+", "1.7", "D"],
-    ["Bao", "Firefox 2.0", "Win 97+ plus / OSX.2+", "1.7", "D"],
-    ["Bao", "Firefox 2.0", "Win 97+ plus / OSX.2+", "1.7", "D"],
-    ["Bao", "Firefox 2.0", "Win 98+ / OSX.2+", "1.7", "D"],
-    ["Bao", "Firefox 2.0", "Win 98+ / OSX.2+", "1.7", "D"],
-    ["Bao", "Firefox 2.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Bao", "Firefox 2.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Bao", "Firefox 2.0", "Win 98+ / OSX.2+a", "1.7", "A"],
-    ["Bao", "Firefox 2.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Bao", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Bao", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Bao", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Bao", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Bao", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Bao", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Bao", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Bao", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Gecko", "Firefox 1.0", "Win 98+ / OSX.2+a", "1.7", "A"],
-    ["Gecko", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Gecko", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Gecko", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Gecko", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 3.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 3.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 3.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 3.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 3.0", "Win 98+ / OSX.2+a", "1.7", "A"],
-    ["Dang", "Firefox 3.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 3.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 3.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 3.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 3.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 3.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 3.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 3.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 3.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 3.0", "Win 98+ / OSX.2+a", "1.7", "A"],
-    ["Dang", "Firefox 3.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Dang", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-    ["Gecko", "Firefox 1.0", "Win 98+ / OSX.2+", "1.7", "A"],
-];
+import axios from "axios";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt, faPen } from "@fortawesome/free-solid-svg-icons";
+import { Button, Modal } from "antd";
+import ModalUser from "../TableAPI/ModalUser";
 
 const tableIndex = ["1", "2", "3", "4", "5", "6"];
 
 export default function Table() {
+    const api = "https://60becf8e6035840017c17a48.mockapi.io/users";
     const [currentPage, setCurrentPage] = useState(0);
-    const [currentTable, setCurrentTable] = useState(data.slice(0, 10));
+    const [currentTable, setCurrentTable] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [modalOpen, setModalOpen] = useState(false);
     const itemPerPage = useRef(10);
+    const [notification, setNotification] = useState("");
+    const [userIdToDelete, setUserIdToDelete] = useState(null);
+    const [action, setAction] = useState("");
+    const [open, setOpen] = useState(false);
+    const [confirmLoading, setConfirmLoading] = useState(false);
+    const [title, setTitle] = useState("");
+    const [modalText, setModalText] = useState("");
+    useEffect(() => {
+        getUsers();
+    }, []);
+    const closeModal = () => {
+        setModalOpen(false);
+    };
+
+    const handleModalOpen = () => {
+        setModalOpen(true);
+    };
+
+    //Xu ly notification
+    const noNotification = () => {
+        setTimeout(() => {
+            setNotification("");
+        }, 2000);
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    };
+
+    // Modal antd
+    const showModal = (id, action) => {
+        setUserIdToDelete(id);
+        setOpen(true);
+        setAction(action);
+    };
+
+    const handleOk = () => {
+        setConfirmLoading(true);
+        if (action === "delete") {
+            deleteUser(userIdToDelete);
+        }
+        setTimeout(() => {
+            setOpen(false);
+            setConfirmLoading(false);
+        }, 1000);
+    };
+    const handleCancel = () => {
+        console.log("Clicked cancel button");
+        setOpen(false);
+    };
+
+    useEffect(() => {
+        if (action === "delete") {
+            setTitle("Xoa");
+            setModalText("Xoa nguoi dung nay ?");
+        } else if (action === "save") {
+            setTitle("Luu");
+            setModalText("Luu thay doi");
+        } else if (action === "create") {
+            setTitle("Tao");
+            setModalText("Xac nhan tao nguoi dung moi");
+        }
+    }, [action]);
+    // Cac ham them sua xoa Users
+    const getUsers = () => {
+        axios
+            .get(api)
+            .then((res) => {
+                setUsers(res.data);
+            })
+            .catch((error) => {
+                console.log("Error fetching users: ", error);
+            });
+    };
+
+    const handleSaveUser = (data) => {
+        axios
+            .post(api, data)
+            .then(() => {
+                getUsers();
+                setNotification("User created");
+                noNotification();
+                scrollToTop();
+                closeModal();
+            })
+            .catch((error) => {
+                console.error("Error creating user:", error);
+            });
+    };
+
+    const deleteUser = (id) => {
+        axios
+            .delete(api + "/" + id)
+            .then(() => {
+                setNotification("User deleted");
+                noNotification();
+                getUsers();
+            })
+            .catch((error) => {
+                console.error("Error deleting user:", error);
+            });
+    };
+    // Ham xu ly chuyen doi table
     useEffect(() => {
         const startIndex = currentPage * itemPerPage.current;
         const endIndex = Math.min(
-            data.length,
+            users.length,
             startIndex + itemPerPage.current
         );
-        setCurrentTable(data.slice(startIndex, endIndex));
+        setCurrentTable(users.slice(startIndex, endIndex));
     }, [currentPage]);
 
     function handleClickPagination(index) {
         setCurrentPage(index);
-        console.log(index);
     }
     function handleClickNext() {
         setCurrentPage(currentPage + 1);
@@ -90,9 +141,41 @@ export default function Table() {
     function handleClickPrevious() {
         setCurrentPage(currentPage - 1);
     }
-
     return (
         <div>
+            {notification && (
+                <div className="notification-container">
+                    <div
+                        className="success-message"
+                        style={
+                            notification === "User deleted"
+                                ? {
+                                      background: "red",
+                                  }
+                                : {
+                                      background: "green",
+                                  }
+                        }
+                    >
+                        {notification}
+                    </div>
+                </div>
+            )}
+            <ModalUser
+                isOpen={modalOpen}
+                closeModal={closeModal}
+                onSave={handleSaveUser}
+            />
+            <Modal
+                title={title}
+                open={open}
+                onOk={handleOk}
+                confirmLoading={confirmLoading}
+                onCancel={handleCancel}
+                mask={false}
+            >
+                <p>{modalText}</p>
+            </Modal>
             <div className="table__component">
                 <div className="table__header">
                     <div className="table__header--left">
@@ -112,14 +195,23 @@ export default function Table() {
                 </div>
 
                 <div className="Table">
-                    <h3 className="table__title" onClick={() => {console.log("XXXXXXXXXXXXXXXXXXXXXXXXX")}}>Hover Data Tables</h3>
-
+                    <div className="title__group">
+                        <h3 className="table__title">Hover Data Tables</h3>
+                        <button
+                            className="create-button"
+                            onClick={() => {
+                                handleModalOpen();
+                            }}
+                        >
+                            Create
+                        </button>
+                    </div>
                     <div className="table__content">
                         <table className="table">
                             <thead>
                                 <tr>
                                     <th scope="col">
-                                        Rendering Engine
+                                        ID
                                         <i
                                             className="fa-solid fa-arrow-down-short-wide"
                                             style={{
@@ -129,7 +221,7 @@ export default function Table() {
                                         ></i>
                                     </th>
                                     <th scope="col">
-                                        Browser
+                                        Name
                                         <i
                                             className="fa-solid fa-sort"
                                             style={{
@@ -139,7 +231,7 @@ export default function Table() {
                                         ></i>
                                     </th>
                                     <th scope="col">
-                                        Platform
+                                        Phone number
                                         <i
                                             className="fa-solid fa-sort"
                                             style={{
@@ -149,7 +241,7 @@ export default function Table() {
                                         ></i>
                                     </th>
                                     <th scope="col">
-                                        Engine version
+                                        City
                                         <i
                                             className="fa-solid fa-sort"
                                             style={{
@@ -159,9 +251,19 @@ export default function Table() {
                                         ></i>
                                     </th>
                                     <th scope="col">
-                                        CSS grade
+                                        Score
                                         <i
                                             className="fa-solid fa-sort"
+                                            style={{
+                                                opacity: "0.2",
+                                                cursor: "pointer",
+                                            }}
+                                        ></i>
+                                    </th>
+                                    <th scope="col">
+                                        Options
+                                        <i
+                                            className="fa-solid fa-prescription-bottle"
                                             style={{
                                                 opacity: "0.2",
                                                 cursor: "pointer",
@@ -172,14 +274,43 @@ export default function Table() {
                             </thead>
 
                             <tbody>
-                                {currentTable.map(function (row, index) {
+                                {currentTable.map(function (user) {
                                     return (
-                                        <tr key={index}>
-                                            {row.map(function (element, cnt) {
-                                                return (
-                                                    <td key={cnt}>{element}</td>
-                                                );
-                                            })}
+                                        <tr key={user.id}>
+                                            <td>{user.id}</td>
+                                            <td>{user.name}</td>
+                                            <td>{user.phoneNumber}</td>
+                                            <td>{user.city}</td>
+                                            <td>{user.score}</td>
+                                            <td className="button-group">
+                                                <button
+                                                    className="edit-btn"
+                                                    // onClick={() => {
+                                                    //     setUserIdToEdit(
+                                                    //         user.id
+                                                    //     );
+                                                    //     getUserToEdit(user.id);
+                                                    // }}
+                                                >
+                                                    <FontAwesomeIcon
+                                                        icon={faPen}
+                                                    />
+                                                </button>
+                                                <button
+                                                    type="primary"
+                                                    className="delete-btn"
+                                                    onClick={() => {
+                                                        showModal(
+                                                            user.id,
+                                                            "delete"
+                                                        );
+                                                    }}
+                                                >
+                                                    <FontAwesomeIcon
+                                                        icon={faTrashAlt}
+                                                    />
+                                                </button>
+                                            </td>
                                         </tr>
                                     );
                                 })}
@@ -187,11 +318,12 @@ export default function Table() {
 
                             <tfoot>
                                 <tr>
-                                    <th scope="col">Rendering Engine</th>
-                                    <th scope="col">Browser</th>
-                                    <th scope="col">Platform</th>
-                                    <th scope="col">Engine version</th>
-                                    <th scope="col">CSS grade</th>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Phone number</th>
+                                    <th scope="col">City</th>
+                                    <th scope="col">Score</th>
+                                    <th scope="col">Options</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -203,8 +335,8 @@ export default function Table() {
                             } to
                 ${Math.min(
                     currentPage * itemPerPage.current + itemPerPage.current,
-                    data.length
-                )} of ${data.length + 1} entries`}
+                    users.length
+                )} of ${users.length + 1} entries`}
                         </div>
 
                         <div className="table__action--right">
@@ -220,7 +352,7 @@ export default function Table() {
                                             cursor: "pointer",
                                         }}
                                         onClick={() => {
-                                            handleClickPrevious(); 
+                                            handleClickPrevious();
                                         }}
                                     >
                                         Previous
@@ -235,8 +367,9 @@ export default function Table() {
                                                 }
                                                 style={{ cursor: "pointer" }}
                                                 onClick={() => {
-                                                    handleClickPagination(index);
-                                                    log();
+                                                    handleClickPagination(
+                                                        index
+                                                    );
                                                 }}
                                             >
                                                 {item}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./sidebarFunction.scss";
+import "./SidebarMenu.scss";
 
 const components = [
     {

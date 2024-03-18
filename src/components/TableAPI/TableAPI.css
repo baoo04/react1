@@ -1,0 +1,107 @@
+.tableAPI {
+  font-family: Arial, sans-serif;
+  margin-top: 50px;
+}
+.tableAPI table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+.tableAPI table th, .tableAPI table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  text-align: center;
+  border-top: 1px solid #ddd;
+}
+.tableAPI table th:first-child, .tableAPI table td:first-child {
+  border-left: 1px solid #ddd;
+}
+.tableAPI table th {
+  background-color: beige;
+}
+.tableAPI table td {
+  background: #fff;
+}
+.tableAPI table tr:hover td {
+  background: #f2f2f2;
+}
+.tableAPI .edit-btn, .tableAPI .delete-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.tableAPI .edit-btn:hover, .tableAPI .delete-btn:hover {
+  background-color: #0056b3;
+}
+.tableAPI .edit-btn.delete-btn, .tableAPI .delete-btn.delete-btn {
+  background-color: brown;
+}
+.tableAPI .edit-btn.delete-btn:hover, .tableAPI .delete-btn.delete-btn:hover {
+  background-color: red;
+}
+.tableAPI .edit-btn.edit-btn, .tableAPI .delete-btn.edit-btn {
+  margin-right: 5px;
+}
+.tableAPI .edit-btn.delete-btn, .tableAPI .delete-btn.delete-btn {
+  margin-left: 5px;
+}
+.tableAPI .users__add {
+  display: flex;
+  flex-wrap: wrap;
+}
+.tableAPI .users__add input[type=text] {
+  width: 200px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.tableAPI .button-group {
+  margin-top: 10px;
+  gap: 15px;
+  display: flex;
+}
+.tableAPI .button-group .btn {
+  cursor: pointer;
+}
+.tableAPI .success-message {
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 4px;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  right: 20px;
+  display: inline-block;
+}
+.tableAPI .users__add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tableAPI .button-group {
+  padding-left: 30px;
+}
+.tableAPI #create, .tableAPI #edit {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+.tableAPI #create:hover, .tableAPI #edit:hover {
+  background-color: #0056b3;
+}/*# sourceMappingURL=TableAPI.css.map */

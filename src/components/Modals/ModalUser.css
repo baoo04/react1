@@ -1,0 +1,106 @@
+@charset "UTF-8";
+.modal {
+  position: fixed;
+  z-index: 6;
+  left: 0;
+  top: -100px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 10px;
+  position: relative;
+  animation-name: modalopen;
+  animation-duration: 0.5s;
+}
+.modal-content h2 {
+  text-align: center;
+}
+.modal-content label {
+  display: block;
+  margin-bottom: 10px;
+}
+.modal-content input {
+  width: calc(100% - 16px);
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.modal-content input:invalid {
+  border-color: red;
+}
+.modal-content .error {
+  color: red;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+.modal-content .save-button,
+.modal-content .cancel-button {
+  width: 30%;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  color: white;
+  font-size: 16px;
+}
+.modal-content .save-button:hover,
+.modal-content .cancel-button:hover {
+  opacity: 0.8;
+}
+.modal-content .save-button span,
+.modal-content .cancel-button span {
+  position: relative;
+  transition: 0.5s;
+}
+.modal-content .save-button span:after,
+.modal-content .cancel-button span:after {
+  content: "»";
+  position: absolute;
+  opacity: 0;
+  top: 50%;
+  right: -20px;
+  transform: translateY(-50%);
+  transition: 0.5s;
+}
+.modal-content .save-button {
+  background-color: #4caf50;
+}
+.modal-content .save-button:hover {
+  background-color: #45a049;
+}
+.modal-content .save-button span:after {
+  color: white;
+}
+.modal-content .cancel-button {
+  background-color: #f44336;
+}
+.modal-content .cancel-button:hover {
+  background-color: #d32f2f;
+}
+.modal-content .cancel-button span:after {
+  color: white;
+}
+
+@keyframes modalopen {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}/*# sourceMappingURL=ModalUser.css.map */

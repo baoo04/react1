@@ -6,7 +6,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faPen } from "@fortawesome/free-solid-svg-icons";
 import { Button, Modal } from "antd";
-import ModalUser from "../TableAPI/ModalUser";
+import ModalUser from "../Modals/ModalUser";
+import EditModal from "../Modals/EditModal";
 
 const tableIndex = ["1", "2", "3", "4", "5", "6"];
 
@@ -16,14 +17,17 @@ export default function Table() {
     const [currentTable, setCurrentTable] = useState([]);
     const [users, setUsers] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
+    const [editModalOpen, setEditModalOpen] = useState(false);
     const itemPerPage = useRef(10);
     const [notification, setNotification] = useState("");
     const [userIdToDelete, setUserIdToDelete] = useState(null);
+    const [userIdToEdit, setUserIdToEdit] = useState(null);
     const [action, setAction] = useState("");
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [title, setTitle] = useState("");
     const [modalText, setModalText] = useState("");
+    const [preUser, setPreUser] = useState({});
     useEffect(() => {
         getUsers();
     }, []);
@@ -35,6 +39,12 @@ export default function Table() {
         setModalOpen(true);
     };
 
+    const closeEditModal = () => {
+        setEditModalOpen(false);
+    };
+    const handleEditModalOpen = () => {
+        setEditModalOpen(true);
+    };
     //Xu ly notification
     const noNotification = () => {
         setTimeout(() => {
@@ -89,7 +99,7 @@ export default function Table() {
             .get(api)
             .then((res) => {
                 setUsers(res.data);
-                console.log("goi thanh conggggggg")
+                console.log("goi thanh conggggggg");
             })
             .catch((error) => {
                 console.log("Error fetching users: ", error);
@@ -101,7 +111,7 @@ export default function Table() {
             .post(api, data)
             .then(() => {
                 getUsers();
-                setNotification("User created");
+                setNotification("User created!");
                 noNotification();
                 scrollToTop();
                 closeModal();
@@ -115,12 +125,29 @@ export default function Table() {
         axios
             .delete(api + "/" + id)
             .then(() => {
-                setNotification("User deleted");
+                setNotification("User deleted!");
                 noNotification();
                 getUsers();
             })
             .catch((error) => {
                 console.error("Error deleting user:", error);
+            });
+    };
+
+    const editUser = (data) => {
+        console.log(data);
+        axios
+            .put(api + "/" + userIdToEdit, data)
+            .then((response) => {
+                console.log("edit thanh cong");
+                getUsers();
+                setNotification("User edited!");
+                noNotification();
+                scrollToTop();
+                closeEditModal();
+            })
+            .catch((error) => {
+                console.error("Error editing user:", error);
             });
     };
     // Ham xu ly chuyen doi table
@@ -131,7 +158,7 @@ export default function Table() {
             startIndex + itemPerPage.current
         );
         setCurrentTable(users.slice(startIndex, endIndex));
-    }, [currentPage]);
+    }, [currentPage, users]);
 
     function handleClickPagination(index) {
         setCurrentPage(index);
@@ -144,28 +171,16 @@ export default function Table() {
     }
     return (
         <div>
-            {notification && (
-                <div className="notification-container">
-                    <div
-                        className="success-message"
-                        style={
-                            notification === "User deleted"
-                                ? {
-                                      background: "red",
-                                  }
-                                : {
-                                      background: "green",
-                                  }
-                        }
-                    >
-                        {notification}
-                    </div>
-                </div>
-            )}
             <ModalUser
                 isOpen={modalOpen}
                 closeModal={closeModal}
                 onSave={handleSaveUser}
+            />
+            <EditModal
+                isOpen={editModalOpen}
+                previousUser={preUser}
+                onSave={editUser}
+                closeModal={closeEditModal}
             />
             <Modal
                 title={title}
@@ -182,6 +197,24 @@ export default function Table() {
                     <div className="table__header--left">
                         <h3>Data tables</h3>
                         <span>advanced table</span>
+                        {notification && (
+                            <div className="notification-container">
+                                <div
+                                    className="success-message"
+                                    style={
+                                        notification === "User deleted!"
+                                            ? {
+                                                  background: "red",
+                                              }
+                                            : {
+                                                  background: "green",
+                                              }
+                                    }
+                                >
+                                    {notification}
+                                </div>
+                            </div>
+                        )}
                     </div>
                     <div className="table__header--right">
                         <div>
@@ -286,12 +319,13 @@ export default function Table() {
                                             <td className="button-group">
                                                 <button
                                                     className="edit-btn"
-                                                    // onClick={() => {
-                                                    //     setUserIdToEdit(
-                                                    //         user.id
-                                                    //     );
-                                                    //     getUserToEdit(user.id);
-                                                    // }}
+                                                    onClick={() => {
+                                                        setUserIdToEdit(
+                                                            user.id
+                                                        );
+                                                        setPreUser(user);
+                                                        handleEditModalOpen();
+                                                    }}
                                                 >
                                                     <FontAwesomeIcon
                                                         icon={faPen}

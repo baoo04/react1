@@ -293,4 +293,29 @@ tbody .button-group .delete-btn svg {
 }
 tbody tr td {
   padding: 10px;
+}
+
+.notification-container {
+  position: relative;
+  top: 0;
+  left: 50%;
+  align-content: center;
+  margin-top: 10px;
+}
+.notification-container .success-message {
+  width: 100px;
+  height: 30px;
+  margin-top: -10px;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+
+@media screen and (min-width: 700px) {
+  .notification-container {
+    left: 110%;
+  }
 }/*# sourceMappingURL=table.css.map */

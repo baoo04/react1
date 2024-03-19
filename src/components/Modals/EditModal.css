@@ -129,4 +129,9 @@
   top: 0;
   right: -20px;
   transition: 0.5s;
-}/*# sourceMappingURL=ModalUser.css.map */
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}/*# sourceMappingURL=EditModal.css.map */

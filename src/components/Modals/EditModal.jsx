@@ -1,14 +1,20 @@
-import React, { useState } from "react";
-import "./ModalUser.css";
-
-export default function ModalUser({ isOpen, closeModal, onSave }) {
-    const [formData, setFormData] = useState({
-        name: "",
-        phoneNumber: "",
-        city: "",
-        score: "",
-    });
-
+import React, { useEffect, useState } from "react";
+import "./EditModal.css";
+export default function EditModal({
+    isOpen,
+    previousUser,
+    onSave,
+    closeModal,
+}) {
+    const [formData, setFormData] = useState({});
+    useEffect(() => {
+        setFormData({
+            name: previousUser.name,
+            phoneNumber: previousUser.phoneNumber,
+            city: previousUser.city,
+            score: previousUser.score,
+        });
+    }, [previousUser]);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -16,16 +22,15 @@ export default function ModalUser({ isOpen, closeModal, onSave }) {
             [name]: value,
         });
     };
-    const handleSubmit = () => {
+    const handleUpdate = () => {
         onSave(formData);
         closeModal();
     };
     if (!isOpen) return null;
-
     return (
         <div className="modal">
             <div className="modal-content">
-                <h2>Create User</h2>
+                <h2>Edit User</h2>
                 <label htmlFor="name">Name:</label>
                 <input
                     type="text"
@@ -58,12 +63,14 @@ export default function ModalUser({ isOpen, closeModal, onSave }) {
                     onChange={handleChange}
                     placeholder="Enter score....."
                 />
-                <button className="save-button" onClick={handleSubmit}>
-                    <span>Save</span>
-                </button>
-                <button className="cancel-button" onClick={closeModal}>
-                    <span>Cancel</span>
-                </button>
+                <div className="button-group">
+                    <button className="save-button" onClick={handleUpdate}>
+                        <span>Save</span>
+                    </button>
+                    <button className="cancel-button" onClick={closeModal}>
+                        <span>Cancel</span>
+                    </button>
+                </div>
             </div>
         </div>
     );

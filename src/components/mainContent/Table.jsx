@@ -5,82 +5,46 @@ import axios from "axios";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faPen } from "@fortawesome/free-solid-svg-icons";
-import { Button, Modal } from "antd";
+import { Button, Card, Modal } from "antd";
 import ModalUser from "../Modals/ModalUser";
 import EditModal from "../Modals/EditModal";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    addUser,
+    loadUser,
+    editModalOpen,
+    createModalOpen,
+    setPreviousUser,
+    setUserId,
+    setAction,
+    setNotification,
+} from "../../redux/actions";
 
 const tableIndex = ["1", "2", "3", "4", "5", "6"];
 
 export default function Table() {
     const api = "https://60becf8e6035840017c17a48.mockapi.io/users";
+    const selector = useSelector((store) => store);
+    const dispatch = useDispatch();
+    const users = selector.users;
+    const statusEdit = selector.statusEdit;
+    const statusCreate = selector.statusCreate;
+    const previousUser = selector.prevUser;
+    const userIdSelected = selector.userIdSelected;
+    const action = selector.action;
+    const notification = selector.notification;
     const [currentPage, setCurrentPage] = useState(0);
     const [currentTable, setCurrentTable] = useState([]);
-    const [users, setUsers] = useState([]);
-    const [modalOpen, setModalOpen] = useState(false);
-    const [editModalOpen, setEditModalOpen] = useState(false);
-    const itemPerPage = useRef(10);
-    const [notification, setNotification] = useState("");
-    const [userIdToDelete, setUserIdToDelete] = useState(null);
     const [userIdToEdit, setUserIdToEdit] = useState(null);
-    const [action, setAction] = useState("");
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [title, setTitle] = useState("");
     const [modalText, setModalText] = useState("");
-    const [preUser, setPreUser] = useState({});
+    const itemPerPage = useRef(10);
     useEffect(() => {
         getUsers();
     }, []);
-    const closeModal = () => {
-        setModalOpen(false);
-    };
-
-    const handleModalOpen = () => {
-        setModalOpen(true);
-    };
-
-    const closeEditModal = () => {
-        setEditModalOpen(false);
-    };
-    const handleEditModalOpen = () => {
-        setEditModalOpen(true);
-    };
-    //Xu ly notification
-    const noNotification = () => {
-        setTimeout(() => {
-            setNotification("");
-        }, 2000);
-    };
-
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    };
-
-    // Modal antd
-    const showModal = (id, action) => {
-        setUserIdToDelete(id);
-        setOpen(true);
-        setAction(action);
-    };
-
-    const handleOk = () => {
-        setConfirmLoading(true);
-        if (action === "delete") {
-            deleteUser(userIdToDelete);
-        }
-        setTimeout(() => {
-            setOpen(false);
-            setConfirmLoading(false);
-        }, 1000);
-    };
-    const handleCancel = () => {
-        console.log("Clicked cancel button");
-        setOpen(false);
-    };
-
+    
     useEffect(() => {
         if (action === "delete") {
             setTitle("Xoa");
@@ -93,13 +57,69 @@ export default function Table() {
             setModalText("Xac nhan tao nguoi dung moi");
         }
     }, [action]);
+
+    useEffect(() => {
+        const startIndex = currentPage * itemPerPage.current;
+        const endIndex = Math.min(
+            users.length,
+            startIndex + itemPerPage.current
+        );
+        setCurrentTable(users.slice(startIndex, endIndex));
+    }, [currentPage, users]);
+
+    const closeModal = () => {
+        dispatch(createModalOpen(false));
+    };
+
+    const handleModalOpen = () => {
+        dispatch(createModalOpen(true));
+    };
+
+    const closeEditModal = () => {
+        dispatch(editModalOpen(false));
+    };
+
+    const handleEditModalOpen = () => {
+        dispatch(editModalOpen(true));
+    };
+
+    //Xu ly notification
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    };
+
+    // Modal antd
+    const showModal = (id, action) => {
+        dispatch(setUserId(id));
+        console.log("id dang duoc chon la: ", userIdSelected)
+        setOpen(true);
+        setAction(action);
+    };
+
+    const handleOk = () => {
+        setConfirmLoading(true);
+        if (action === "delete") {
+            deleteUser(userIdSelected);
+        }
+        setTimeout(() => {
+            setOpen(false);
+            setConfirmLoading(false);
+        }, 1000);
+    };
+
+    const handleCancel = () => {
+        setOpen(false);
+    };
+
     // Cac ham them sua xoa Users
     const getUsers = () => {
         axios
             .get(api)
             .then((res) => {
-                setUsers(res.data);
-                console.log("goi thanh conggggggg");
+                dispatch(loadUser(res.data));
             })
             .catch((error) => {
                 console.log("Error fetching users: ", error);
@@ -111,8 +131,10 @@ export default function Table() {
             .post(api, data)
             .then(() => {
                 getUsers();
-                setNotification("User created!");
-                noNotification();
+                dispatch(setNotification("User created!"));
+                setTimeout(() => {
+                    dispatch(setNotification(""));
+                }, 2000);
                 scrollToTop();
                 closeModal();
             })
@@ -125,8 +147,10 @@ export default function Table() {
         axios
             .delete(api + "/" + id)
             .then(() => {
-                setNotification("User deleted!");
-                noNotification();
+                dispatch(setNotification("User deleted!"));
+                setTimeout(() => {
+                    dispatch(setNotification(""));
+                }, 2000);
                 getUsers();
             })
             .catch((error) => {
@@ -139,10 +163,11 @@ export default function Table() {
         axios
             .put(api + "/" + userIdToEdit, data)
             .then((response) => {
-                console.log("edit thanh cong");
                 getUsers();
-                setNotification("User edited!");
-                noNotification();
+                dispatch(setNotification("User edited!"));
+                setTimeout(() => {
+                    dispatch(setNotification(""));
+                }, 2000);
                 scrollToTop();
                 closeEditModal();
             })
@@ -151,34 +176,30 @@ export default function Table() {
             });
     };
     // Ham xu ly chuyen doi table
-    useEffect(() => {
-        const startIndex = currentPage * itemPerPage.current;
-        const endIndex = Math.min(
-            users.length,
-            startIndex + itemPerPage.current
-        );
-        setCurrentTable(users.slice(startIndex, endIndex));
-    }, [currentPage, users]);
 
-    function handleClickPagination(index) {
+    const handleClickPagination = (index) => {
         setCurrentPage(index);
-    }
-    function handleClickNext() {
+    };
+
+    const handleClickNext = () => {
         setCurrentPage(currentPage + 1);
-    }
-    function handleClickPrevious() {
+    };
+
+    const handleClickPrevious = () => {
         setCurrentPage(currentPage - 1);
-    }
+    };
+
+    //return
     return (
         <div>
             <ModalUser
-                isOpen={modalOpen}
+                isOpen={statusCreate}
                 closeModal={closeModal}
                 onSave={handleSaveUser}
             />
             <EditModal
-                isOpen={editModalOpen}
-                previousUser={preUser}
+                isOpen={statusEdit}
+                previousUser={previousUser}
                 onSave={editUser}
                 closeModal={closeEditModal}
             />
@@ -308,9 +329,9 @@ export default function Table() {
                             </thead>
 
                             <tbody>
-                                {currentTable.map(function (user) {
+                                {currentTable.map(function (user, index) {
                                     return (
-                                        <tr key={user.id}>
+                                        <tr key={user.id + index}>
                                             <td>{user.id}</td>
                                             <td>{user.name}</td>
                                             <td>{user.phoneNumber}</td>
@@ -320,10 +341,18 @@ export default function Table() {
                                                 <button
                                                     className="edit-btn"
                                                     onClick={() => {
+                                                        dispatch(
+                                                            setPreviousUser(
+                                                                user
+                                                            )
+                                                        );
                                                         setUserIdToEdit(
                                                             user.id
                                                         );
-                                                        setPreUser(user);
+                                                        console.log(
+                                                            "user dang duoc chonn: ",
+                                                            user
+                                                        );
                                                         handleEditModalOpen();
                                                     }}
                                                 >

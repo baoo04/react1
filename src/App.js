@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import Table from "./components/mainContent/Table";
 import SideBar from "./components/sidebar/SideBar";
 import Header from "./components/Header/Header";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 function App() {
     const [showSubFunctions, setShowSubFunctions] = useState(false);
@@ -11,13 +13,15 @@ function App() {
         setShowSubFunctions(!showSubFunctions);
     };
     return (
-        <div className="App">
-            <SideBar />
-            <main>
-                <Header />
-                <Table />
-            </main>
-        </div>
+        <Provider store={store}>
+            <div className="App">
+                <SideBar />
+                <main>
+                    <Header />
+                    <Table />
+                </main>
+            </div>
+        </Provider>
     );
 }
 

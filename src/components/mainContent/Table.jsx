@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useRef, useEffect } from "react";
-import "./table.css";
 import axios from "axios";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,9 +7,9 @@ import { faTrashAlt, faPen } from "@fortawesome/free-solid-svg-icons";
 import { Button, Card, Modal } from "antd";
 import ModalUser from "../Modals/ModalUser";
 import EditModal from "../Modals/EditModal";
+import DeleteModal from "../Modals/DeleteModal";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    addUser,
     loadUser,
     editModalOpen,
     createModalOpen,
@@ -18,45 +17,43 @@ import {
     setUserId,
     setAction,
     setNotification,
+    setDeleteModalOpen,
 } from "../../redux/actions";
+import "./table.css";
 
 const tableIndex = ["1", "2", "3", "4", "5", "6"];
 
 export default function Table() {
     const api = "https://60becf8e6035840017c17a48.mockapi.io/users";
-    const selector = useSelector((store) => store);
     const dispatch = useDispatch();
-    const users = selector.users;
-    const statusEdit = selector.statusEdit;
-    const statusCreate = selector.statusCreate;
-    const previousUser = selector.prevUser;
-    const userIdSelected = selector.userIdSelected;
-    const action = selector.action;
-    const notification = selector.notification;
+    const users = useSelector((state) => state.users);
+    const statusEdit = useSelector((state) => state.statusEdit);
+    const statusCreate = useSelector((state) => state.statusCreate);
+    const statusDelete = useSelector((state) => state.statusDelete);
+    const previousUser = useSelector((state) => state.prevUser);
+    const userIdSelected = useSelector((state) => state.userIdSelected);
+    const action = useSelector((state) => state.action);
+    const notification = useSelector((state) => state.notification);
     const [currentPage, setCurrentPage] = useState(0);
     const [currentTable, setCurrentTable] = useState([]);
     const [userIdToEdit, setUserIdToEdit] = useState(null);
-    const [open, setOpen] = useState(false);
-    const [confirmLoading, setConfirmLoading] = useState(false);
-    const [title, setTitle] = useState("");
-    const [modalText, setModalText] = useState("");
     const itemPerPage = useRef(10);
     useEffect(() => {
         getUsers();
     }, []);
-    
-    useEffect(() => {
-        if (action === "delete") {
-            setTitle("Xoa");
-            setModalText("Xoa nguoi dung nay ?");
-        } else if (action === "save") {
-            setTitle("Luu");
-            setModalText("Luu thay doi");
-        } else if (action === "create") {
-            setTitle("Tao");
-            setModalText("Xac nhan tao nguoi dung moi");
-        }
-    }, [action]);
+
+    // useEffect(() => {
+    //     if (action === "delete") {
+    //         setTitle("Xoa");
+    //         setModalText("Xoa nguoi dung nay ?");
+    //     } else if (action === "save") {
+    //         setTitle("Luu");
+    //         setModalText("Luu thay doi");
+    //     } else if (action === "create") {
+    //         setTitle("Tao");
+    //         setModalText("Xac nhan tao nguoi dung moi");
+    //     }
+    // }, [action]);
 
     useEffect(() => {
         const startIndex = currentPage * itemPerPage.current;
@@ -94,24 +91,30 @@ export default function Table() {
     // Modal antd
     const showModal = (id, action) => {
         dispatch(setUserId(id));
-        console.log("id dang duoc chon la: ", userIdSelected)
-        setOpen(true);
-        setAction(action);
+        console.log("id dang duoc chon la: ", userIdSelected);
+        dispatch(setDeleteModalOpen(true));
+        dispatch(setAction(action));
     };
 
+    // const handleOk = () => {
+    //     setConfirmLoading(true);
+    //     if (action === "delete") {
+    //         deleteUser(userIdSelected);
+    //     }
+    //     setTimeout(() => {
+    //         setOpen(false);
+    //         setConfirmLoading(false);
+    //     }, 1000);
+    // };
+
     const handleOk = () => {
-        setConfirmLoading(true);
         if (action === "delete") {
             deleteUser(userIdSelected);
         }
-        setTimeout(() => {
-            setOpen(false);
-            setConfirmLoading(false);
-        }, 1000);
     };
-
     const handleCancel = () => {
-        setOpen(false);
+        // dispatch(setDeleteModalOpen(false));
+        console.log("============>", statusDelete);
     };
 
     // Cac ham them sua xoa Users
@@ -162,7 +165,7 @@ export default function Table() {
         console.log(data);
         axios
             .put(api + "/" + userIdToEdit, data)
-            .then((response) => {
+            .then(() => {
                 getUsers();
                 dispatch(setNotification("User edited!"));
                 setTimeout(() => {
@@ -203,7 +206,7 @@ export default function Table() {
                 onSave={editUser}
                 closeModal={closeEditModal}
             />
-            <Modal
+            {/* <Modal
                 title={title}
                 open={open}
                 onOk={handleOk}
@@ -212,7 +215,12 @@ export default function Table() {
                 mask={false}
             >
                 <p>{modalText}</p>
-            </Modal>
+            </Modal> */}
+            <DeleteModal
+                isOpen={statusDelete}
+                closeModal={handleCancel}
+                onOk={handleOk}
+            />
             <div className="table__component">
                 <div className="table__header">
                     <div className="table__header--left">
@@ -424,6 +432,7 @@ export default function Table() {
                                     {tableIndex.map((item, index) => {
                                         return (
                                             <li
+                                                key={index}
                                                 className={
                                                     currentPage === index
                                                         ? "pagination__item active"

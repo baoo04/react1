@@ -10,17 +10,19 @@ import {
     setUserId,
     setAction,
     setNotification,
+    setDeleteModalOpen,
 } from "./actions";
 
 const initialValue = {
     users: [],
-    user: [],
+    user: {},
     statusEdit: false,
     statusCreate: false,
     prevUser: {},
     userIdSelected: null,
     action: "",
     notification: "",
+    statusDelete: false,
 };
 
 const reducers = createReducer(initialValue, (builder) =>
@@ -54,6 +56,9 @@ const reducers = createReducer(initialValue, (builder) =>
         })
         .addCase(setNotification, (state, action) => {
             state.notification = action.payload;
+        })
+        .addCase(setDeleteModalOpen, (state, action) => {
+            state.statusDelete = action.payload;
         })
 );
 

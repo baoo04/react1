@@ -22,6 +22,8 @@ const setAction = createAction("setAction");
 
 const setNotification = createAction("setNotification");
 
+const setDeleteModalOpen = createAction("setDeleteModalOpen");
+
 export {
     increase,
     decrease,
@@ -34,4 +36,5 @@ export {
     setUserId,
     setAction,
     setNotification,
+    setDeleteModalOpen,
 };

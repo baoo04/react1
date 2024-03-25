@@ -22,7 +22,8 @@ export default function EditModal({
             [name]: value,
         });
     };
-    const handleUpdate = () => {
+    const handleUpdate = (e) => {
+        e.preventDefault();
         onSave(formData);
         closeModal();
     };

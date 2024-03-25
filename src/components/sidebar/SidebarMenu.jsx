@@ -95,10 +95,6 @@ function SidebarMenu() {
         }
     };
 
-    const toggleChildExpand = (index, childIndex) => {
-        setChildExpanded({ ...childExpanded, [index]: !childExpanded[index] });
-    };
-
     return (
         <ul className="sidebar__menu">
             {components.map((component, index) => (

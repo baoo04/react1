@@ -7,11 +7,6 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 
 function App() {
-    const [showSubFunctions, setShowSubFunctions] = useState(false);
-
-    const toggleSubFunctions = () => {
-        setShowSubFunctions(!showSubFunctions);
-    };
     return (
         <Provider store={store}>
             <div className="App">

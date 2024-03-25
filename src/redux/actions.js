@@ -24,6 +24,8 @@ const setNotification = createAction("setNotification");
 
 const setDeleteModalOpen = createAction("setDeleteModalOpen");
 
+const setLoading = createAction("setLoading");
+
 export {
     increase,
     decrease,
@@ -37,4 +39,5 @@ export {
     setAction,
     setNotification,
     setDeleteModalOpen,
+    setLoading,
 };

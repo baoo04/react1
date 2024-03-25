@@ -318,4 +318,7 @@ tbody tr td {
   .notification-container {
     left: 110%;
   }
+}
+.loader-container {
+  z-index: 1000;
 }/*# sourceMappingURL=table.css.map */

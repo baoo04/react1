@@ -91,21 +91,21 @@
     padding-bottom: 10px;
     font-size: 13px;
     .create-button {
-        background-color: #4caf50; 
-        border: none; 
-        color: white; 
-        padding: 12px 32px; 
-        text-align: center; 
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        padding: 12px 32px;
+        text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 16px; 
+        font-size: 16px;
         margin: 4px 2px;
         cursor: pointer;
-        border-radius: 10px; 
-        transition-duration: 0.4s; 
+        border-radius: 10px;
+        transition-duration: 0.4s;
 
         &:hover {
-            background-color: #45a049; 
+            background-color: #45a049;
         }
     }
     .title__group {
@@ -341,7 +341,6 @@ tbody {
     }
 }
 
-
 .notification-container {
     position: relative;
     top: 0;
@@ -361,8 +360,12 @@ tbody {
     }
 }
 
-@media  screen and (min-width: 700px) {
+@media screen and (min-width: 700px) {
     .notification-container {
         left: 110%;
     }
+}
+
+.loader-container {
+    z-index: 1000;
 }

@@ -1,7 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
 import {
-    decrease,
-    addUser,
     loadUser,
     EditUSer,
     editModalOpen,
@@ -11,6 +9,7 @@ import {
     setAction,
     setNotification,
     setDeleteModalOpen,
+    setLoading,
 } from "./actions";
 
 const initialValue = {
@@ -23,16 +22,11 @@ const initialValue = {
     action: "",
     notification: "",
     statusDelete: false,
+    statusLoading: false,
 };
 
 const reducers = createReducer(initialValue, (builder) =>
     builder
-        .addCase(addUser, (state, action) => {
-            state.users.push(action.payload);
-        })
-        .addCase(decrease, (state, action) => {
-            state.count -= 1;
-        })
         .addCase(loadUser, (state, action) => {
             state.users = action.payload;
         })
@@ -59,6 +53,9 @@ const reducers = createReducer(initialValue, (builder) =>
         })
         .addCase(setDeleteModalOpen, (state, action) => {
             state.statusDelete = action.payload;
+        })
+        .addCase(setLoading, (state, action) => {
+            state.statusLoading = action.payload;
         })
 );
 

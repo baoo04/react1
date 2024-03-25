@@ -3,11 +3,11 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faPen } from "@fortawesome/free-solid-svg-icons";
-import { Button, Card, Modal } from "antd";
+import { faTrashAlt, faPen, faL } from "@fortawesome/free-solid-svg-icons";
 import ModalUser from "../Modals/ModalUser";
 import EditModal from "../Modals/EditModal";
 import DeleteModal from "../Modals/DeleteModal";
+import ClipLoader from "react-spinners/ClipLoader";
 import { useDispatch, useSelector } from "react-redux";
 import {
     loadUser,
@@ -18,6 +18,7 @@ import {
     setAction,
     setNotification,
     setDeleteModalOpen,
+    setLoading,
 } from "../../redux/actions";
 import "./table.css";
 
@@ -34,6 +35,7 @@ export default function Table() {
     const userIdSelected = useSelector((state) => state.userIdSelected);
     const action = useSelector((state) => state.action);
     const notification = useSelector((state) => state.notification);
+    const statusLoading = useSelector((state) => state.statusLoading);
     const [currentPage, setCurrentPage] = useState(0);
     const [currentTable, setCurrentTable] = useState([]);
     const [userIdToEdit, setUserIdToEdit] = useState(null);
@@ -41,19 +43,6 @@ export default function Table() {
     useEffect(() => {
         getUsers();
     }, []);
-
-    // useEffect(() => {
-    //     if (action === "delete") {
-    //         setTitle("Xoa");
-    //         setModalText("Xoa nguoi dung nay ?");
-    //     } else if (action === "save") {
-    //         setTitle("Luu");
-    //         setModalText("Luu thay doi");
-    //     } else if (action === "create") {
-    //         setTitle("Tao");
-    //         setModalText("Xac nhan tao nguoi dung moi");
-    //     }
-    // }, [action]);
 
     useEffect(() => {
         const startIndex = currentPage * itemPerPage.current;
@@ -88,33 +77,21 @@ export default function Table() {
         });
     };
 
-    // Modal antd
+    // Modal delete
     const showModal = (id, action) => {
         dispatch(setUserId(id));
-        console.log("id dang duoc chon la: ", userIdSelected);
         dispatch(setDeleteModalOpen(true));
         dispatch(setAction(action));
     };
 
-    // const handleOk = () => {
-    //     setConfirmLoading(true);
-    //     if (action === "delete") {
-    //         deleteUser(userIdSelected);
-    //     }
-    //     setTimeout(() => {
-    //         setOpen(false);
-    //         setConfirmLoading(false);
-    //     }, 1000);
-    // };
-
     const handleOk = () => {
         if (action === "delete") {
             deleteUser(userIdSelected);
+            dispatch(setDeleteModalOpen(false));
         }
     };
     const handleCancel = () => {
-        // dispatch(setDeleteModalOpen(false));
-        console.log("============>", statusDelete);
+        dispatch(setDeleteModalOpen(false));
     };
 
     // Cac ham them sua xoa Users
@@ -130,6 +107,7 @@ export default function Table() {
     };
 
     const handleSaveUser = (data) => {
+        dispatch(setLoading(true));
         axios
             .post(api, data)
             .then(() => {
@@ -143,10 +121,14 @@ export default function Table() {
             })
             .catch((error) => {
                 console.error("Error creating user:", error);
+            })
+            .finally(() => {
+                dispatch(setLoading(false));
             });
     };
 
     const deleteUser = (id) => {
+        dispatch(setLoading(true));
         axios
             .delete(api + "/" + id)
             .then(() => {
@@ -158,11 +140,14 @@ export default function Table() {
             })
             .catch((error) => {
                 console.error("Error deleting user:", error);
+            })
+            .finally(() => {
+                dispatch(setLoading(false));
             });
     };
 
     const editUser = (data) => {
-        console.log(data);
+        dispatch(setLoading(true));
         axios
             .put(api + "/" + userIdToEdit, data)
             .then(() => {
@@ -176,6 +161,9 @@ export default function Table() {
             })
             .catch((error) => {
                 console.error("Error editing user:", error);
+            })
+            .finally(() => {
+                dispatch(setLoading(false));
             });
     };
     // Ham xu ly chuyen doi table
@@ -195,32 +183,6 @@ export default function Table() {
     //return
     return (
         <div>
-            <ModalUser
-                isOpen={statusCreate}
-                closeModal={closeModal}
-                onSave={handleSaveUser}
-            />
-            <EditModal
-                isOpen={statusEdit}
-                previousUser={previousUser}
-                onSave={editUser}
-                closeModal={closeEditModal}
-            />
-            {/* <Modal
-                title={title}
-                open={open}
-                onOk={handleOk}
-                confirmLoading={confirmLoading}
-                onCancel={handleCancel}
-                mask={false}
-            >
-                <p>{modalText}</p>
-            </Modal> */}
-            <DeleteModal
-                isOpen={statusDelete}
-                closeModal={handleCancel}
-                onOk={handleOk}
-            />
             <div className="table__component">
                 <div className="table__header">
                     <div className="table__header--left">
@@ -269,137 +231,143 @@ export default function Table() {
                             Create
                         </button>
                     </div>
-                    <div className="table__content">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">
-                                        ID
-                                        <i
-                                            className="fa-solid fa-arrow-down-short-wide"
-                                            style={{
-                                                opacity: "0.7",
-                                                cursor: "pointer",
-                                            }}
-                                        ></i>
-                                    </th>
-                                    <th scope="col">
-                                        Name
-                                        <i
-                                            className="fa-solid fa-sort"
-                                            style={{
-                                                opacity: "0.2",
-                                                cursor: "pointer",
-                                            }}
-                                        ></i>
-                                    </th>
-                                    <th scope="col">
-                                        Phone number
-                                        <i
-                                            className="fa-solid fa-sort"
-                                            style={{
-                                                opacity: "0.2",
-                                                cursor: "pointer",
-                                            }}
-                                        ></i>
-                                    </th>
-                                    <th scope="col">
-                                        City
-                                        <i
-                                            className="fa-solid fa-sort"
-                                            style={{
-                                                opacity: "0.2",
-                                                cursor: "pointer",
-                                            }}
-                                        ></i>
-                                    </th>
-                                    <th scope="col">
-                                        Score
-                                        <i
-                                            className="fa-solid fa-sort"
-                                            style={{
-                                                opacity: "0.2",
-                                                cursor: "pointer",
-                                            }}
-                                        ></i>
-                                    </th>
-                                    <th scope="col">
-                                        Options
-                                        <i
-                                            className="fa-solid fa-prescription-bottle"
-                                            style={{
-                                                opacity: "0.2",
-                                                cursor: "pointer",
-                                            }}
-                                        ></i>
-                                    </th>
-                                </tr>
-                            </thead>
+                    {statusLoading ? (
+                        <div className="loader-container">
+                            <ClipLoader color={"#000"} size={80} />
+                        </div>
+                    ) : (
+                        <div className="table__content">
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">
+                                            ID
+                                            <i
+                                                className="fa-solid fa-arrow-down-short-wide"
+                                                style={{
+                                                    opacity: "0.7",
+                                                    cursor: "pointer",
+                                                }}
+                                            ></i>
+                                        </th>
+                                        <th scope="col">
+                                            Name
+                                            <i
+                                                className="fa-solid fa-sort"
+                                                style={{
+                                                    opacity: "0.2",
+                                                    cursor: "pointer",
+                                                }}
+                                            ></i>
+                                        </th>
+                                        <th scope="col">
+                                            Phone number
+                                            <i
+                                                className="fa-solid fa-sort"
+                                                style={{
+                                                    opacity: "0.2",
+                                                    cursor: "pointer",
+                                                }}
+                                            ></i>
+                                        </th>
+                                        <th scope="col">
+                                            City
+                                            <i
+                                                className="fa-solid fa-sort"
+                                                style={{
+                                                    opacity: "0.2",
+                                                    cursor: "pointer",
+                                                }}
+                                            ></i>
+                                        </th>
+                                        <th scope="col">
+                                            Score
+                                            <i
+                                                className="fa-solid fa-sort"
+                                                style={{
+                                                    opacity: "0.2",
+                                                    cursor: "pointer",
+                                                }}
+                                            ></i>
+                                        </th>
+                                        <th scope="col">
+                                            Options
+                                            <i
+                                                className="fa-solid fa-prescription-bottle"
+                                                style={{
+                                                    opacity: "0.2",
+                                                    cursor: "pointer",
+                                                }}
+                                            ></i>
+                                        </th>
+                                    </tr>
+                                </thead>
 
-                            <tbody>
-                                {currentTable.map(function (user, index) {
-                                    return (
-                                        <tr key={user.id + index}>
-                                            <td>{user.id}</td>
-                                            <td>{user.name}</td>
-                                            <td>{user.phoneNumber}</td>
-                                            <td>{user.city}</td>
-                                            <td>{user.score}</td>
-                                            <td className="button-group">
-                                                <button
-                                                    className="edit-btn"
-                                                    onClick={() => {
-                                                        dispatch(
-                                                            setPreviousUser(
+                                <tbody>
+                                    {currentTable.map(function (user, index) {
+                                        return (
+                                            <tr key={user.id + index}>
+                                                <td>{user.id}</td>
+                                                <td>{user.name}</td>
+                                                <td>{user.phoneNumber}</td>
+                                                <td>{user.city}</td>
+                                                <td>{user.score}</td>
+                                                <td className="button-group">
+                                                    <button
+                                                        className="edit-btn"
+                                                        onClick={() => {
+                                                            dispatch(
+                                                                setPreviousUser(
+                                                                    user
+                                                                )
+                                                            );
+                                                            setUserIdToEdit(
+                                                                user.id
+                                                            );
+                                                            console.log(
+                                                                "user dang duoc chonn: ",
                                                                 user
-                                                            )
-                                                        );
-                                                        setUserIdToEdit(
-                                                            user.id
-                                                        );
-                                                        console.log(
-                                                            "user dang duoc chonn: ",
-                                                            user
-                                                        );
-                                                        handleEditModalOpen();
-                                                    }}
-                                                >
-                                                    <FontAwesomeIcon
-                                                        icon={faPen}
-                                                    />
-                                                </button>
-                                                <button
-                                                    type="primary"
-                                                    className="delete-btn"
-                                                    onClick={() => {
-                                                        showModal(
-                                                            user.id,
-                                                            "delete"
-                                                        );
-                                                    }}
-                                                >
-                                                    <FontAwesomeIcon
-                                                        icon={faTrashAlt}
-                                                    />
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
+                                                            );
+                                                            handleEditModalOpen();
+                                                        }}
+                                                    >
+                                                        <FontAwesomeIcon
+                                                            icon={faPen}
+                                                        />
+                                                    </button>
+                                                    <button
+                                                        type="primary"
+                                                        className="delete-btn"
+                                                        onClick={() => {
+                                                            showModal(
+                                                                user.id,
+                                                                "delete"
+                                                            );
+                                                        }}
+                                                    >
+                                                        <FontAwesomeIcon
+                                                            icon={faTrashAlt}
+                                                        />
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
 
-                            <tfoot>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Phone number</th>
-                                    <th scope="col">City</th>
-                                    <th scope="col">Score</th>
-                                    <th scope="col">Options</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+                                <tfoot>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Phone number</th>
+                                        <th scope="col">City</th>
+                                        <th scope="col">Score</th>
+                                        <th scope="col">Options</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    )}
                     <div className="table__action">
                         <div className="table__action--left">
                             {`Showing ${
@@ -438,7 +406,9 @@ export default function Table() {
                                                         ? "pagination__item active"
                                                         : "pagination__item"
                                                 }
-                                                style={{ cursor: "pointer" }}
+                                                style={{
+                                                    cursor: "pointer",
+                                                }}
                                                 onClick={() => {
                                                     handleClickPagination(
                                                         index
@@ -468,6 +438,22 @@ export default function Table() {
                     </div>
                 </div>
             </div>
+            <ModalUser
+                isOpen={statusCreate}
+                closeModal={closeModal}
+                onSave={handleSaveUser}
+            />
+            <EditModal
+                isOpen={statusEdit}
+                previousUser={previousUser}
+                onSave={editUser}
+                closeModal={closeEditModal}
+            />
+            <DeleteModal
+                isOpen={statusDelete}
+                closeModal={handleCancel}
+                onOk={handleOk}
+            />
         </div>
     );
 }

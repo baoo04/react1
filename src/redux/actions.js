@@ -26,18 +26,21 @@ const setDeleteModalOpen = createAction("setDeleteModalOpen");
 
 const setLoading = createAction("setLoading");
 
+const toggleSideBar = createAction("toggleSideBar");
+
 export {
-    increase,
-    decrease,
-    addUser,
-    loadUser,
-    EditUSer,
-    editModalOpen,
-    createModalOpen,
-    setPreviousUser,
-    setUserId,
-    setAction,
-    setNotification,
-    setDeleteModalOpen,
-    setLoading,
+  increase,
+  decrease,
+  addUser,
+  loadUser,
+  EditUSer,
+  editModalOpen,
+  createModalOpen,
+  setPreviousUser,
+  setUserId,
+  setAction,
+  setNotification,
+  setDeleteModalOpen,
+  setLoading,
+  toggleSideBar,
 };

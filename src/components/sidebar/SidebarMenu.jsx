@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./SidebarMenu.scss";
-
+import { UseSelector, useSelector } from "react-redux";
 const components = [
   {
     name: "Dashboard",
@@ -21,12 +21,12 @@ const components = [
   },
   {
     name: "Charts",
-    logo: "fa-chart-pie",
+    logo: "fa-fan",
     child: ["ChartJS", "Morris", "Flot", "Inline charts"],
   },
   {
     name: "UI Elements",
-    logo: "fa-laptop",
+    logo: "fa-github",
     child: ["General", "Icons", "Buttons", "Sliders", "Timeline", "Modals"],
   },
   {
@@ -89,6 +89,7 @@ const SidebarMenu = () => {
   const [expandedItem, setExpandedItem] = useState(null);
   const [childExpanded, setChildExpanded] = useState({});
 
+  const sidebarOpen = useSelector((state) => state.sidebarOpen);
   const toggleExpand = (index) => {
     if (expandedItem === index) {
       setExpandedItem(null);
@@ -109,7 +110,10 @@ const SidebarMenu = () => {
 
   return (
     <>
-      <ul className="sidebar__menu">
+      <ul
+        className="sidebar__menu"
+        style={sidebarOpen ? { marginTop: "0" } : { marginTop: "15px" }}
+      >
         {components.map((component, index) => (
           <li
             key={index}
@@ -125,10 +129,16 @@ const SidebarMenu = () => {
               }}
             >
               <div className="groupp">
-                <i className={`fas ${component.logo}`}></i>
-                {component.name}
+                <i
+                  className={`fas ${component.logo}`}
+                  style={
+                    sidebarOpen ? { paddingTop: "0" } : { paddingTop: "7px" }
+                  }
+                ></i>
+                {sidebarOpen ? component.name : null}
               </div>
-              {component.name !== "Layout Options" &&
+              {sidebarOpen &&
+                component.name !== "Layout Options" &&
                 component.name !== "Widgets" &&
                 component.name !== "Calendar" && (
                   <i
@@ -139,23 +149,36 @@ const SidebarMenu = () => {
                     }
                   ></i>
                 )}
-              {component.name === "Layout Options" && (
-                <div
-                  className="alert blue-alert"
-                  style={{ marginRight: "10px" }}
-                >
-                  4
-                </div>
-              )}
-              {component.name === "Widgets" && (
-                <div className="alert green-alert">new</div>
-              )}
-              {component.name === "Calendar" && (
-                <div className="calendar__alerts">
-                  <div className="alert blue-alert">17</div>
-                  <div className="alert red-alert">3</div>
-                </div>
-              )}
+              {sidebarOpen
+                ? component.name === "Layout Options" && (
+                    <div
+                      className="alert blue-alert"
+                      style={{ marginRight: "10px" }}
+                    >
+                      4
+                    </div>
+                  )
+                : null}
+
+              {sidebarOpen
+                ? component.name === "Widgets" && (
+                    <div className="alert green-alert">new</div>
+                  )
+                : null}
+              {sidebarOpen
+                ? component.name === "Calendar" && (
+                    <div className="calendar__alerts">
+                      <div className="alert green-alert">15</div>
+                      <div className="alert red-alert">7</div>
+                      <div
+                        className="alert blue-alert"
+                        style={{ marginRight: "10px" }}
+                      >
+                        6
+                      </div>
+                    </div>
+                  )
+                : null}
             </div>
             {component.child.length > 0 && expandedItem === index && (
               <ul
@@ -174,23 +197,6 @@ const SidebarMenu = () => {
           </li>
         ))}
       </ul>
-      <div className="labels">
-        <h3>LABELS</h3>
-        <div className="labels__list">
-          <div className="labels__list--item">
-            <i className="fa fa-circle-o text-red"></i>
-            <span>Important</span>
-          </div>
-          <div className="labels__list--item">
-            <i className="fa fa-circle-o text-yellow"></i>
-            <span>Warning</span>
-          </div>
-          <div className="labels__list--item">
-            <i className="fa fa-circle-o text-blue"></i>
-            <span>Information</span>
-          </div>
-        </div>
-      </div>
     </>
   );
 };

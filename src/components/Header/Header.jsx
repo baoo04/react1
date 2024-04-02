@@ -1,5 +1,5 @@
 import React from "react";
-import "./Header.css";
+import "./Header.scss";
 import { toggleSideBar } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,7 +8,6 @@ export default function Header() {
   const dispatch = useDispatch();
   const handleSidebarOpen = () => {
     dispatch(toggleSideBar(!sidebarOpen));
-    console.log(sidebarOpen);
   };
   return (
     <>

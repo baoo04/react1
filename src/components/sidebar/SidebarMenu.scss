@@ -101,8 +101,11 @@ form {
 }
 
 .sidebar__menu {
-  margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  list-style: none;
   li {
     padding: 14px 0px 14px 0px;
     font-size: 0.8rem;
@@ -132,7 +135,6 @@ form {
     }
     .calendar__alerts {
       display: flex;
-      gap: 5px;
     }
     .alert {
       padding: 2px 6px;
@@ -153,12 +155,6 @@ form {
         margin-right: 0px;
       }
     }
-  }
-
-  li:nth-child(7) {
-    border-left: 3px solid #3c8dbc;
-    padding-left: 0;
-    margin-left: -3px;
   }
 
   li:hover {
@@ -209,57 +205,10 @@ form {
   }
 }
 
-.labels {
-  h3 {
-    padding-left: 12px;
-    color: #4b646f;
-    background-color: #1a2226;
-    height: 40px;
-    text-align: center;
-    align-content: center;
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    font-weight: normal;
-  }
-  .labels__list {
-    margin: 0;
-    padding-left: 16px;
-    .labels__list--item {
-        &:first-child {
-            padding-top: 0px;
-        }
-        padding: 12px 0px;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        i {
-            padding-top: 3px;
-            font-weight: 400;
-            font-size: 13px;
-            &.text-red {
-                color: #dd4b39;
-            }
-            &.text-blue {
-                color: #00c0ef;
-            }
-            &.text-yellow{
-                color: #f39c12;
-            }
-        }
-        span {
-            color: #b8c7ce;
-            font-size: 13.8px;
-            font-weight: 500;
-        }
-    }
-  }
-}
-
 .sideBarChild {
   margin: 0;
   padding: 0;
-  margin-top: 10px;
+  margin-top: 15px;
   background: #2c3b41;
   overflow: visible;
   max-height: 1000px;
@@ -270,7 +219,7 @@ form {
   li {
     padding: 15px 0px 8px 3px;
     color: #8aa4af;
-    font-size: 0.8rem;
+    font-size: 13.6px;
     display: flex;
     align-items: center;
     justify-content: start;

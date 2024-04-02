@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
-import "./EditModal.css";
-export default function EditModal({
-  isOpen,
-  previousUser,
-  onSave,
-  closeModal,
-}) {
+import "./EditModal.scss";
+import { useSelector } from "react-redux";
+export default function EditModal({ isOpen, onSave, closeModal }) {
   const [formData, setFormData] = useState({});
+  const prevUser = useSelector((state) => state.prevUser);
   useEffect(() => {
     setFormData({
-      name: previousUser.name,
-      phoneNumber: previousUser.phoneNumber,
-      city: previousUser.city,
-      score: previousUser.score,
+      name: prevUser.name,
+      phoneNumber: prevUser.phoneNumber,
+      city: prevUser.city,
+      score: prevUser.score,
     });
-  }, [previousUser]);
+  }, [prevUser]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({

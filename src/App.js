@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 import React, { useState } from "react";
 import Table from "./components/mainContent/Table";
 import SideBar from "./components/sidebar/SideBar";

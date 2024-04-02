@@ -24,7 +24,7 @@ const initialValue = {
   notification: "",
   statusDelete: false,
   statusLoading: false,
-  sidebarOpen: false,
+  sidebarOpen: true,
 };
 
 const reducers = createReducer(initialValue, (builder) =>

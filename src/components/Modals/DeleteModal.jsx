@@ -1,5 +1,5 @@
 import React from "react";
-import "./DeleteModal.css";
+import "./DeleteModal.scss";
 
 export default function DeleteModal({ isOpen, onOk, closeModal }) {
   if (!isOpen) return null;

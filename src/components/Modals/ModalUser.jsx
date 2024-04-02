@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./ModalUser.css";
+import "./ModalUser.scss";
 
 export default function ModalUser({ isOpen, closeModal, onSave }) {
   const initialFormData = {

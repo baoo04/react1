@@ -18,11 +18,10 @@ import {
   setPreviousUser,
   setUserId,
   setAction,
-  setNotification,
   setDeleteModalOpen,
   setLoading,
 } from "../../redux/actions";
-import "./table.css";
+import "./table.scss";
 
 const tableIndex = ["1", "2", "3", "4", "5", "6"];
 
@@ -33,7 +32,6 @@ export default function Table() {
   const statusEdit = useSelector((state) => state.statusEdit);
   const statusCreate = useSelector((state) => state.statusCreate);
   const statusDelete = useSelector((state) => state.statusDelete);
-  const previousUser = useSelector((state) => state.prevUser);
   const userIdSelected = useSelector((state) => state.userIdSelected);
   const action = useSelector((state) => state.action);
   const notification = useSelector((state) => state.notification);
@@ -173,10 +171,9 @@ export default function Table() {
   const handleClickPrevious = () => {
     setCurrentPage(currentPage - 1);
   };
-
-  //return
+  
   return (
-    <div>
+    <>
       <div className="table__component">
         <div className="table__header">
           <div className="table__header--left">
@@ -312,7 +309,6 @@ export default function Table() {
                           onClick={() => {
                             dispatch(setPreviousUser(user));
                             setUserIdToEdit(user.id);
-                            console.log("user dang duoc chonn: ", user);
                             handleEditModalOpen();
                           }}
                         >
@@ -412,7 +408,6 @@ export default function Table() {
       />
       <EditModal
         isOpen={statusEdit}
-        previousUser={previousUser}
         onSave={editUser}
         closeModal={closeEditModal}
       />
@@ -422,6 +417,6 @@ export default function Table() {
         onOk={handleOk}
       />
       <ToastContainer autoClose={2000} />
-    </div>
+    </>
   );
 }

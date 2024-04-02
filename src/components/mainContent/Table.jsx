@@ -40,6 +40,7 @@ export default function Table() {
   const [currentTable, setCurrentTable] = useState([]);
   const [userIdToEdit, setUserIdToEdit] = useState(null);
   const itemPerPage = useRef(10);
+  
   useEffect(() => {
     getUsers();
   }, []);

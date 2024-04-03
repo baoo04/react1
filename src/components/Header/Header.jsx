@@ -1,14 +1,21 @@
 import React from "react";
+
 import "./Header.scss";
+
 import { toggleSideBar } from "../../redux/actions";
+
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Header() {
-  const sidebarOpen = useSelector((state) => state.sidebarOpen);
+
+  const isSidebarOpen = useSelector((state) => state.isSidebarOpen);
+
   const dispatch = useDispatch();
+
   const handleSidebarOpen = () => {
-    dispatch(toggleSideBar(!sidebarOpen));
+    dispatch(toggleSideBar(!isSidebarOpen));
   };
+
   return (
     <>
       <div className="title-responsive">

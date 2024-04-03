@@ -1,46 +1,67 @@
 import React from "react";
+
 import axios from "axios";
+
 import { useState, useRef, useEffect } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
+
 import "@fortawesome/fontawesome-free/css/all.min.css";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { faTrashAlt, faPen, faL } from "@fortawesome/free-solid-svg-icons";
+
 import ModalUser from "../Modals/ModalUser";
+
 import EditModal from "../Modals/EditModal";
+
 import DeleteModal from "../Modals/DeleteModal";
+
 import ClipLoader from "react-spinners/ClipLoader";
+
 import { ToastContainer, toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
+
 import {
   loadUser,
-  editModalOpen,
-  createModalOpen,
-  setPreviousUser,
-  setUserId,
-  setAction,
+  setEditModalOpen,
+  setCreateModalOpen,
   setDeleteModalOpen,
   setLoading,
+  setUser,
 } from "../../redux/actions";
+
 import "./table.scss";
 
 const tableIndex = ["1", "2", "3", "4", "5", "6"];
 
 export default function Table() {
   const api = "https://60becf8e6035840017c17a48.mockapi.io/users";
+
   const dispatch = useDispatch();
+
   const users = useSelector((state) => state.users);
-  const statusEdit = useSelector((state) => state.statusEdit);
-  const statusCreate = useSelector((state) => state.statusCreate);
-  const statusDelete = useSelector((state) => state.statusDelete);
-  const userIdSelected = useSelector((state) => state.userIdSelected);
-  const action = useSelector((state) => state.action);
-  const notification = useSelector((state) => state.notification);
-  const statusLoading = useSelector((state) => state.statusLoading);
+
+  const user = useSelector((state) => state.user);
+
+  const isEditModalOpen = useSelector((state) => state.isEditModalOpen);
+
+  const isCreateModalOpen = useSelector((state) => state.isCreateModalOpen);
+
+  const isDeleteModalOpen = useSelector((state) => state.isDeleteModalOpen);
+
+  const isLoading = useSelector((state) => state.isLoading);
+
+  const [userIdToDelete, setUserIdToDelete] = useState(null);
+
   const [currentPage, setCurrentPage] = useState(0);
+
   const [currentTable, setCurrentTable] = useState([]);
-  const [userIdToEdit, setUserIdToEdit] = useState(null);
+
   const itemPerPage = useRef(10);
-  
+
   useEffect(() => {
     getUsers();
   }, []);
@@ -52,19 +73,19 @@ export default function Table() {
   }, [currentPage, users]);
 
   const closeModal = () => {
-    dispatch(createModalOpen(false));
+    dispatch(setCreateModalOpen(false));
   };
 
   const handleModalOpen = () => {
-    dispatch(createModalOpen(true));
+    dispatch(setCreateModalOpen(true));
   };
 
   const closeEditModal = () => {
-    dispatch(editModalOpen(false));
+    dispatch(setEditModalOpen(false));
   };
 
   const handleEditModalOpen = () => {
-    dispatch(editModalOpen(true));
+    dispatch(setEditModalOpen(true));
   };
 
   //Xu ly notification
@@ -80,18 +101,16 @@ export default function Table() {
   };
 
   // Modal delete
-  const showModal = (id, action) => {
-    dispatch(setUserId(id));
+  const showModal = (id) => {
+    setUserIdToDelete(id);
     dispatch(setDeleteModalOpen(true));
-    dispatch(setAction(action));
   };
 
   const handleOk = () => {
-    if (action === "delete") {
-      deleteUser(userIdSelected);
-      dispatch(setDeleteModalOpen(false));
-    }
+    deleteUser(userIdToDelete);
+    dispatch(setDeleteModalOpen(false));
   };
+
   const handleCancel = () => {
     dispatch(setDeleteModalOpen(false));
   };
@@ -145,7 +164,7 @@ export default function Table() {
   const editUser = (data) => {
     dispatch(setLoading(true));
     axios
-      .put(api + "/" + userIdToEdit, data)
+      .put(api + "/" + user.id, data)
       .then(() => {
         notify("User Edited successfully!");
         getUsers();
@@ -159,8 +178,8 @@ export default function Table() {
         dispatch(setLoading(false));
       });
   };
-  // Ham xu ly chuyen doi table
 
+  // Ham xu ly chuyen doi table
   const handleClickPagination = (index) => {
     setCurrentPage(index);
   };
@@ -172,7 +191,8 @@ export default function Table() {
   const handleClickPrevious = () => {
     setCurrentPage(currentPage - 1);
   };
-  
+
+  //RETURN
   return (
     <>
       <div className="table__component">
@@ -180,24 +200,6 @@ export default function Table() {
           <div className="table__header--left">
             <h3>Data tables</h3>
             <span>advanced table</span>
-            {notification && (
-              <div className="notification-container">
-                <div
-                  className="success-message"
-                  style={
-                    notification === "User deleted!"
-                      ? {
-                          background: "red",
-                        }
-                      : {
-                          background: "green",
-                        }
-                  }
-                >
-                  {notification}
-                </div>
-              </div>
-            )}
           </div>
           <div className="table__header--right">
             <div>
@@ -223,7 +225,7 @@ export default function Table() {
               Create
             </button>
           </div>
-          {statusLoading ? (
+          {isLoading ? (
             <div className="loader-container">
               <ClipLoader color={"#000"} size={80} />
             </div>
@@ -296,38 +298,35 @@ export default function Table() {
               </thead>
 
               <tbody>
-                {currentTable.map(function (user, index) {
-                  return (
-                    <tr key={user.id + index}>
-                      <td>{user.id}</td>
-                      <td>{user.name}</td>
-                      <td>{user.phoneNumber}</td>
-                      <td>{user.city}</td>
-                      <td>{user.score}</td>
-                      <td className="button-group">
-                        <button
-                          className="edit-btn"
-                          onClick={() => {
-                            dispatch(setPreviousUser(user));
-                            setUserIdToEdit(user.id);
-                            handleEditModalOpen();
-                          }}
-                        >
-                          <FontAwesomeIcon icon={faPen} />
-                        </button>
-                        <button
-                          type="primary"
-                          className="delete-btn"
-                          onClick={() => {
-                            showModal(user.id, "delete");
-                          }}
-                        >
-                          <FontAwesomeIcon icon={faTrashAlt} />
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
+                {currentTable.map((user, index) => (
+                  <tr key={user.id + index}>
+                    <td>{user.id}</td>
+                    <td>{user.name}</td>
+                    <td>{user.phoneNumber}</td>
+                    <td>{user.city}</td>
+                    <td>{user.score}</td>
+                    <td className="button-group">
+                      <button
+                        className="edit-btn"
+                        onClick={() => {
+                          dispatch(setUser(user));
+                          handleEditModalOpen();
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faPen} />
+                      </button>
+                      <button
+                        type="button"
+                        className="delete-btn"
+                        onClick={() => {
+                          showModal(user.id);
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faTrashAlt} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
 
               <tfoot>
@@ -366,26 +365,24 @@ export default function Table() {
                   >
                     Previous
                   </li>
-                  {tableIndex.map((item, index) => {
-                    return (
-                      <li
-                        key={index}
-                        className={
-                          currentPage === index
-                            ? "pagination__item active"
-                            : "pagination__item"
-                        }
-                        style={{
-                          cursor: "pointer",
-                        }}
-                        onClick={() => {
-                          handleClickPagination(index);
-                        }}
-                      >
-                        {item}
-                      </li>
-                    );
-                  })}
+                  {tableIndex.map((item, index) => (
+                    <li
+                      key={index}
+                      className={
+                        currentPage === index
+                          ? "pagination__item active"
+                          : "pagination__item"
+                      }
+                      style={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        handleClickPagination(index);
+                      }}
+                    >
+                      {item}
+                    </li>
+                  ))}
 
                   <li
                     className="next"
@@ -403,17 +400,17 @@ export default function Table() {
         </div>
       </div>
       <ModalUser
-        isOpen={statusCreate}
+        isOpen={isCreateModalOpen}
         closeModal={closeModal}
         onSave={handleSaveUser}
       />
       <EditModal
-        isOpen={statusEdit}
+        isOpen={isEditModalOpen}
         onSave={editUser}
         closeModal={closeEditModal}
       />
       <DeleteModal
-        isOpen={statusDelete}
+        isOpen={isDeleteModalOpen}
         closeModal={handleCancel}
         onOk={handleOk}
       />

@@ -1,8 +1,11 @@
 import React from "react";
+
 import "./DeleteModal.scss";
 
 export default function DeleteModal({ isOpen, onOk, closeModal }) {
+  
   if (!isOpen) return null;
+
   return (
     <div className="delete-modal">
       <div className="delete-modal__content">
@@ -21,8 +24,7 @@ export default function DeleteModal({ isOpen, onOk, closeModal }) {
           </button>
           <button
             className="btn btn-cancel"
-            onClick={(e) => {
-              console.log("=====>abc");
+            onClick={() => {
               closeModal();
             }}
           >

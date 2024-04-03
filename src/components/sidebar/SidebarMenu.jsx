@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+
 import "./SidebarMenu.scss";
-import { UseSelector, useSelector } from "react-redux";
+
+import { useSelector } from "react-redux";
+
 const components = [
   {
     name: "Dashboard",
@@ -81,15 +84,14 @@ const components = [
   },
 ];
 
-const log = (data) => {
-  console.log(data);
-};
-
 const SidebarMenu = () => {
+
   const [expandedItem, setExpandedItem] = useState(null);
+
   const [childExpanded, setChildExpanded] = useState({});
 
-  const sidebarOpen = useSelector((state) => state.sidebarOpen);
+  const isSidebarOpen = useSelector((state) => state.isSidebarOpen);
+  
   const toggleExpand = (index) => {
     if (expandedItem === index) {
       setExpandedItem(null);
@@ -112,7 +114,7 @@ const SidebarMenu = () => {
     <>
       <ul
         className="sidebar__menu"
-        style={sidebarOpen ? { marginTop: "0" } : { marginTop: "15px" }}
+        style={isSidebarOpen ? { marginTop: "0" } : { marginTop: "15px" }}
       >
         {components.map((component, index) => (
           <li
@@ -132,12 +134,12 @@ const SidebarMenu = () => {
                 <i
                   className={`fas ${component.logo}`}
                   style={
-                    sidebarOpen ? { paddingTop: "0" } : { paddingTop: "7px" }
+                    isSidebarOpen ? { paddingTop: "0" } : { paddingTop: "7px" }
                   }
                 ></i>
-                {sidebarOpen ? component.name : null}
+                {isSidebarOpen ? component.name : null}
               </div>
-              {sidebarOpen &&
+              {isSidebarOpen &&
                 component.name !== "Layout Options" &&
                 component.name !== "Widgets" &&
                 component.name !== "Calendar" && (
@@ -149,7 +151,7 @@ const SidebarMenu = () => {
                     }
                   ></i>
                 )}
-              {sidebarOpen
+              {isSidebarOpen
                 ? component.name === "Layout Options" && (
                     <div
                       className="alert blue-alert"
@@ -160,12 +162,12 @@ const SidebarMenu = () => {
                   )
                 : null}
 
-              {sidebarOpen
+              {isSidebarOpen
                 ? component.name === "Widgets" && (
                     <div className="alert green-alert">new</div>
                   )
                 : null}
-              {sidebarOpen
+              {isSidebarOpen
                 ? component.name === "Calendar" && (
                     <div className="calendar__alerts">
                       <div className="alert green-alert">15</div>

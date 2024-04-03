@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+
 import "./ModalUser.scss";
 
 export default function ModalUser({ isOpen, closeModal, onSave }) {
+  
   const initialFormData = {
     name: "",
     phoneNumber: "",
@@ -17,7 +19,9 @@ export default function ModalUser({ isOpen, closeModal, onSave }) {
   };
 
   const [formData, setFormData] = useState(initialFormData);
+
   const [errors, setErrors] = useState(initialErrors);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -37,6 +41,7 @@ export default function ModalUser({ isOpen, closeModal, onSave }) {
         newErrors[key] = "This field is required";
       }
     });
+
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
@@ -46,6 +51,7 @@ export default function ModalUser({ isOpen, closeModal, onSave }) {
       setErrors(initialErrors);
     }
   };
+
   useEffect(() => {
     if (isOpen) {
       setFormData(initialFormData);

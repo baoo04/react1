@@ -1,14 +1,19 @@
 import React from "react";
+
 import SidebarMenu from "./SidebarMenu";
+
 import "./Sidebar.scss";
+
 import { useSelector } from "react-redux";
 
 export default function SideBar() {
-  const sidebarOpen = useSelector((state) => state.sidebarOpen);
+  
+  const isSidebarOpen = useSelector((state) => state.isSidebarOpen);
+  
   return (
     <>
-      <div className={`sidebar ${sidebarOpen ? "" : "minimized"}`}>
-        {sidebarOpen ? (
+      <div className={`sidebar ${isSidebarOpen ? "" : "minimized"}`}>
+        {isSidebarOpen ? (
           <div className="title">
             <p style={{ display: "inline-block" }}>Admin</p>
             <span>LTE</span>

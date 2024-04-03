@@ -1,5 +1,7 @@
 import React from "react";
+
 import "./SidebarSmall.scss";
+
 export default function SidebarSmall() {
   const items = [
     {
@@ -80,6 +82,7 @@ export default function SidebarSmall() {
       child: [],
     },
   ];
+
   return (
     <>
       <div className="sidebarSmall">

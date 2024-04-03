@@ -1,26 +1,14 @@
 import { createAction } from "@reduxjs/toolkit";
 
-const increase = createAction("increase");
-
 const loadUser = createAction("load");
 
-const decrease = createAction("decrease");
+const setUser = createAction("setUser");
 
 const addUser = createAction("addUser");
 
-const EditUSer = createAction("EditUser");
+const setEditModalOpen = createAction("editModalOpen");
 
-const editModalOpen = createAction("editModalOpen");
-
-const createModalOpen = createAction("createModalOpen");
-
-const setPreviousUser = createAction("setPreviousUser");
-
-const setUserId = createAction("setUserId");
-
-const setAction = createAction("setAction");
-
-const setNotification = createAction("setNotification");
+const setCreateModalOpen = createAction("createModalOpen");
 
 const setDeleteModalOpen = createAction("setDeleteModalOpen");
 
@@ -29,18 +17,12 @@ const setLoading = createAction("setLoading");
 const toggleSideBar = createAction("toggleSideBar");
 
 export {
-  increase,
-  decrease,
   addUser,
   loadUser,
-  EditUSer,
-  editModalOpen,
-  createModalOpen,
-  setPreviousUser,
-  setUserId,
-  setAction,
-  setNotification,
+  setEditModalOpen,
+  setCreateModalOpen,
   setDeleteModalOpen,
   setLoading,
   toggleSideBar,
+  setUser,
 };

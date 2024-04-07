@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 export default function SideBar() {
   
-  const isSidebarOpen = useSelector((state) => state.isSidebarOpen);
+  const isSidebarOpen = useSelector((state) => state.modalReducers.isSidebarOpen);
   
   return (
     <>

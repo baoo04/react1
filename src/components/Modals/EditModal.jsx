@@ -5,9 +5,8 @@ import "./EditModal.scss";
 import { useSelector } from "react-redux";
 
 export default function EditModal({ isOpen, onSave, closeModal }) {
-  
   const [formData, setFormData] = useState({});
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.userReducers.userSelected);
 
   useEffect(() => {
     setFormData({

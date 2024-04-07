@@ -1,7 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 
 import {
-  loadUser,
   setEditModalOpen,
   setCreateModalOpen,
   setDeleteModalOpen,
@@ -11,7 +10,6 @@ import {
 } from "./actions";
 
 const initialValue = {
-  users: [],
   user: {},
   isEditModalOpen: false,
   isCreateModalOpen: false,
@@ -20,11 +18,8 @@ const initialValue = {
   isSidebarOpen: true,
 };
 
-const reducers = createReducer(initialValue, (builder) =>
+export const modalReducers = createReducer(initialValue, (builder) =>
   builder
-    .addCase(loadUser, (state, action) => {
-      state.users = action.payload;
-    })
     .addCase(setUser, (state, action) => {
       state.user = action.payload;
     })
@@ -45,4 +40,3 @@ const reducers = createReducer(initialValue, (builder) =>
     })
 );
 
-export default reducers;

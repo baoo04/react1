@@ -1,7 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
 
-const loadUser = createAction("load");
-
 const setUser = createAction("setUser");
 
 const addUser = createAction("addUser");
@@ -18,7 +16,6 @@ const toggleSideBar = createAction("toggleSideBar");
 
 export {
   addUser,
-  loadUser,
   setEditModalOpen,
   setCreateModalOpen,
   setDeleteModalOpen,

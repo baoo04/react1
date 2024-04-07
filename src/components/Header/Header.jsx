@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Header() {
 
-  const isSidebarOpen = useSelector((state) => state.isSidebarOpen);
+  const isSidebarOpen = useSelector((state) => state.modalReducers.isSidebarOpen);
 
   const dispatch = useDispatch();
 

@@ -90,7 +90,7 @@ const SidebarMenu = () => {
 
   const [childExpanded, setChildExpanded] = useState({});
 
-  const isSidebarOpen = useSelector((state) => state.isSidebarOpen);
+  const isSidebarOpen = useSelector((state) => state.modalReducers.isSidebarOpen);
   
   const toggleExpand = (index) => {
     if (expandedItem === index) {

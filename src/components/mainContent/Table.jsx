@@ -25,13 +25,19 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import {
-  loadUser,
   setEditModalOpen,
   setCreateModalOpen,
   setDeleteModalOpen,
   setLoading,
   setUser,
 } from "../../redux/actions";
+
+import {
+  fetchUserById,
+  fetchUsersList,
+  handleSaveUser,
+  deleteUser,
+} from "../../redux/thunk";
 
 import "./table.scss";
 
@@ -42,17 +48,15 @@ export default function Table() {
 
   const dispatch = useDispatch();
 
-  const users = useSelector((state) => state.users);
+  const {
+    user,
+    isCreateModalOpen,
+    isDeleteModalOpen,
+    isEditModalOpen,
+    isLoading,
+  } = useSelector((state) => state.modalReducers);
 
-  const user = useSelector((state) => state.user);
-
-  const isEditModalOpen = useSelector((state) => state.isEditModalOpen);
-
-  const isCreateModalOpen = useSelector((state) => state.isCreateModalOpen);
-
-  const isDeleteModalOpen = useSelector((state) => state.isDeleteModalOpen);
-
-  const isLoading = useSelector((state) => state.isLoading);
+  const { usersList } = useSelector((state) => state.userReducers);
 
   const [userIdToDelete, setUserIdToDelete] = useState(null);
 
@@ -68,9 +72,12 @@ export default function Table() {
 
   useEffect(() => {
     const startIndex = currentPage * itemPerPage.current;
-    const endIndex = Math.min(users.length, startIndex + itemPerPage.current);
-    setCurrentTable(users.slice(startIndex, endIndex));
-  }, [currentPage, users]);
+    const endIndex = Math.min(
+      usersList.length,
+      startIndex + itemPerPage.current
+    );
+    setCurrentTable(usersList.slice(startIndex, endIndex));
+  }, [currentPage, usersList]);
 
   const closeModal = () => {
     dispatch(setCreateModalOpen(false));
@@ -117,17 +124,10 @@ export default function Table() {
 
   // Cac ham them sua xoa Users
   const getUsers = () => {
-    axios
-      .get(api)
-      .then((res) => {
-        dispatch(loadUser(res.data));
-      })
-      .catch((error) => {
-        console.log("Error fetching users: ", error);
-      });
+    dispatch(fetchUsersList());
   };
 
-  const handleSaveUser = (data) => {
+  const saveUser = (data) => {
     dispatch(setLoading(true));
     axios
       .post(api, data)
@@ -143,6 +143,7 @@ export default function Table() {
       .finally(() => {
         dispatch(setLoading(false));
       });
+    // dispatch(handleSaveUser(data));
   };
 
   const deleteUser = (id) => {
@@ -309,7 +310,7 @@ export default function Table() {
                       <button
                         className="edit-btn"
                         onClick={() => {
-                          dispatch(setUser(user));
+                          dispatch(fetchUserById(user.id));
                           handleEditModalOpen();
                         }}
                       >
@@ -346,8 +347,8 @@ export default function Table() {
               {`Showing ${currentPage * itemPerPage.current + 1} to
                 ${Math.min(
                   currentPage * itemPerPage.current + itemPerPage.current,
-                  users.length
-                )} of ${users.length + 1} entries`}
+                  usersList.length
+                )} of ${usersList.length + 1} entries`}
             </div>
 
             <div className="table__action--right">
@@ -402,7 +403,7 @@ export default function Table() {
       <ModalUser
         isOpen={isCreateModalOpen}
         closeModal={closeModal}
-        onSave={handleSaveUser}
+        onSave={saveUser}
       />
       <EditModal
         isOpen={isEditModalOpen}
@@ -414,7 +415,7 @@ export default function Table() {
         closeModal={handleCancel}
         onOk={handleOk}
       />
-      <ToastContainer autoClose={2000} />
+      <ToastContainer autoClose={2000} pauseOnHover={false} draggable={false} />
     </>
   );
 }

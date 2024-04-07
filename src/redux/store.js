@@ -1,9 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import reducers from "./reducers";
+import { userReducers } from "./userReducers";
+
+import { modalReducers } from "./modalReducers";
 
 const store = configureStore({
-    reducer: reducers,
+  reducer: {
+    modalReducers: modalReducers,
+    userReducers: userReducers,
+  },
 });
 
 export default store;
